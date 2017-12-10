@@ -38,7 +38,6 @@ public class Normalizer {
 
     public ArrayList<String> connectLines(ArrayList<String> file) {
         ArrayList<String> fileWithConnctedLines = new ArrayList<>();
-        fileWithConnctedLines.add(file.get(0));
 
         for(int i = 0; i < file.size()-1; i++) {
 

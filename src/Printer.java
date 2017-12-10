@@ -37,7 +37,29 @@ public class Printer {
         }
     }
 
-    public void printElements() {
+    public void printNodeChildren(Node node, int index) {
+        for(int i = 1; i < node.getDepth(); i++) {
+            System.out.print("  ");
+        }
 
+        System.out.println(node.getData());
+
+        for(int i = 0; i < node.getChildren().size(); i++) {
+            Node childrenNode = node.getChildren().get(i);
+
+            printNodeChildren(childrenNode, i);
+        }
+    }
+
+    public void printElements() {
+        System.out.println(args[2]);
+        if(args[2].matches("^Rozdział\\s\\d+$")) {
+            int index = Integer.parseInt(args[2].substring(9));
+            System.out.println(index);
+        }
+
+        if(args[2].matches("")) {
+
+        }
     }
 }

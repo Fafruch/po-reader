@@ -19,7 +19,7 @@ public class Parser {
         arrayListStack.add(root);
 
         for(String line : storedFile) {
-            System.out.println(line);
+            // System.out.println(line);
 
             boolean lineIsRodzial = line.matches(patternRozdzial);
             boolean lineIsDzial = line.matches(patternDzial);
