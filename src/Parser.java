@@ -6,7 +6,7 @@ public class Parser {
     String patternRozdzial = "^Rozdział \\w*$";
     String patternDzial = "^([A-Z,ŻŹĆĄŚĘŁÓŃ](\\s)?)+$";
     String patternArtykul = "^(Art. )(\\d)+(.)$";
-    String patternUstep = "^(\\d+. )(.)*$";
+    String patternUstep = "^(\\d+\\. )(.)*$";
     String patternPunkt = "^(\\d+)\\)(.)*$";
     String patternKazdaLinia = "^(.)*$";
 
@@ -14,7 +14,7 @@ public class Parser {
         this.storedFile = storedFile;
     }
 
-    public Node parseToNodes(Node root) {
+    public Node parseToTree(Node root) {
         ArrayList<Node> arrayListStack = new ArrayList<>();
         arrayListStack.add(root);
 
@@ -29,7 +29,7 @@ public class Parser {
                             !line.matches(patternRozdzial) &&
                             !line.matches(patternDzial) &&
                             !line.matches(patternUstep) &&
-                            !line.matches(patternPunkt));;
+                            !line.matches(patternPunkt));
             boolean lineIsPunkt = line.matches(patternPunkt);
 
             int depth = 0;
