@@ -9,7 +9,7 @@ public class Main {
             Node node = new Node(0, "", null);
             ArrayList<String> storedFile = new ArrayList<>();
 
-            String line = null;
+            String line;
             while ((line = br.readLine()) != null) {
                 storedFile.add(line);
             }

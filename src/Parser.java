@@ -81,15 +81,7 @@ public class Parser {
 
                 arrayListStack.add(newNode);
             }
-
-
         }
-
-        for(Node childrenNode : root.getChildren()) {
-            //System.out.println(childrenNode.getData());
-        }
-
-        System.out.println(root.getChildren().get(0).getData());
 
         return root;
     }

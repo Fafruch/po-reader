@@ -14,7 +14,6 @@ public class Normalizer {
         boolean contentStarted = false;
 
         for(String line : file) {
-            //System.out.println(line);
             if(line.matches(patternRozdzial)) {
                 contentStarted = true;
             }
@@ -47,8 +46,6 @@ public class Normalizer {
             String nextLine = file.get(i+1);
             String connectedLines = null;
             boolean wasConnecting = false;
-            //System.out.println(currentLine);
-
 
             while((currentLine.matches(patternKoniecNormalnie) ||
                     currentLine.matches(patternKoniecMyslnikiem)) &&
@@ -65,16 +62,10 @@ public class Normalizer {
 
                 if(currentLine.matches(patternKoniecNormalnie)) {
                     connectedLines = currentLine + " " + nextLine;
-                    //System.out.println(1 + " " + connectedLines + " LINIA:  " + nextLine);
                 } else {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length()-1);
                     connectedLines = currentLineWithoutDash + nextLine;
-                    //System.out.println(2 + " " + connectedLines + " LINIA: " + nextLine);
                 }
-
-                /*System.out.println(i);
-                System.out.println(currentLine);
-                System.out.println(nextLine.matches(patternPunkt));*/
 
                 wasConnecting = true;
                 i++;
