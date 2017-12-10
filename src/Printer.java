@@ -17,7 +17,7 @@ public class Printer {
         }
     }
 
-    public void printTableOfContents(Node node, int index) {
+    private void printTableOfContents(Node node, int index) {
         for(int i = 1; i < node.getDepth(); i++) {
             System.out.print("  ");
         }
@@ -37,24 +37,9 @@ public class Printer {
         }
     }
 
-    public void printNodeChildren(Node node) {
-        for(int i = 1; i < node.getDepth(); i++) {
-            System.out.print("  ");
-        }
-
-        System.out.println(node.getData());
-
-        for(int i = 0; i < node.getChildren().size(); i++) {
-            Node childrenNode = node.getChildren().get(i);
-
-            printNodeChildren(childrenNode);
-        }
-    }
-
-    public void printElements() {
-        //System.out.println(args[2]);
-
-        args[2] = normalizeString(args[2]);
+    private void printElements() {
+        Normalizer normalizer = new Normalizer();
+        args[2] = normalizer.normalizeString(args[2]);
 
         if(args[2].matches("^rozdział\\d+,dział\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
@@ -85,10 +70,48 @@ public class Printer {
             Node element = root.getChildren().get(rozdzialIndex);
 
             printNodeChildren(element);
+        } else if(args[2].matches("^art.\\d+$")) {
+            int artykulIndex = Integer.parseInt(args[2].substring(4));
+
+            if(artykulIndex < 1 || artykulIndex > 243) {
+                throw new Error("Nie ma takiego artykulu!");
+            }
+
+            printArtykul(root, artykulIndex);
         }
     }
 
-    private String normalizeString(String string) {
-        return string.replaceAll("\\s+","").toLowerCase();
+    private void printArtykul(Node node, int index) {
+        if(node.getDepth() > 3) return;
+
+        if(node.getDepth() == 3) {
+            String data = node.getData();
+            int lastIndexOfDot = data.lastIndexOf('.');
+            String artykul = node.getData().substring(5, lastIndexOfDot);
+
+            int artykulIndex = Integer.parseInt(artykul);
+
+            if(index == artykulIndex) {
+                printNodeChildren(node);
+            }
+        }
+
+        for(Node child : node.getChildren()) {
+            printArtykul(child, index);
+        }
+    }
+
+    private void printNodeChildren(Node node) {
+        for(int i = 1; i < node.getDepth(); i++) {
+            System.out.print("  ");
+        }
+
+        System.out.println(node.getData());
+
+        for(int i = 0; i < node.getChildren().size(); i++) {
+            Node childrenNode = node.getChildren().get(i);
+
+            printNodeChildren(childrenNode);
+        }
     }
 }
