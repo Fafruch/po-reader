@@ -9,7 +9,7 @@ public class Printer {
 
     public void print() {
         if(this.args[1].equals("-t")) {
-            printTableOfContents(root);
+            printTableOfContents(root, 0);
         } else if (this.args[1].equals("-e")) {
             printElements();
         } else {
@@ -17,17 +17,23 @@ public class Printer {
         }
     }
 
-    public void printTableOfContents(Node node) {
+    public void printTableOfContents(Node node, int index) {
         for(int i = 1; i < node.getDepth(); i++) {
             System.out.print("  ");
         }
 
-        System.out.println(node.getData());
+        if(node.getDepth() == 4) {
+            System.out.println("Ustep " + (index + 1) + ".");
+        } else if (node.getDepth() == 5) {
+            System.out.println("Punkt " + (index + 1) + ")");
+        } else {
+            System.out.println(node.getData());
+        }
 
         for(int i = 0; i < node.getChildren().size(); i++) {
             Node childrenNode = node.getChildren().get(i);
 
-            printTableOfContents(childrenNode);
+            printTableOfContents(childrenNode, i);
         }
     }
 

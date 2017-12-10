@@ -4,7 +4,7 @@ public class Normalizer {
     String patternRozdzial = "^Rozdział \\w*$";
     String patternDzial = "^([A-Z,ŻŹĆĄŚĘŁÓŃ](\\s)?)+$";
     String patternArtykul = "^(Art. )(\\d)+(.)$";
-    String patternUstep = "^(\\d+. )(.)*$";
+    String patternUstep = "^(\\d+\\. )(.)*$";
     String patternPunkt = "^(\\d+)\\)(.)*$";
     String patternKoniecMyslnikiem = "^(.)*-$";
     String patternKoniecNormalnie = "^(.)*[^-]$";
