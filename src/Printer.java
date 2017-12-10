@@ -77,11 +77,28 @@ public class Printer {
                 throw new Error("Nie ma takiego artykulu!");
             }
 
-            printArtykul(root, artykulIndex);
+            printArtykulyBetween(root, artykulIndex, artykulIndex);
+        } else if(args[2].matches("^art.\\d+-\\d+$")) {
+            int indexOfDash = args[2].indexOf('-');
+            int firstArtykulIndex = Integer.parseInt(args[2].substring(4, indexOfDash));
+            int lastArtykulIndex = Integer.parseInt(args[2].substring(indexOfDash + 1));
+
+            System.out.println(firstArtykulIndex);
+            System.out.println(lastArtykulIndex);
+
+            if(firstArtykulIndex > lastArtykulIndex) {
+                throw new Error("Niepoprawny zakres artykulow!");
+            }
+
+            if(firstArtykulIndex < 1 || firstArtykulIndex > 243 || lastArtykulIndex < 1 || lastArtykulIndex > 243) {
+                throw new Error("Nie ma takiego artykulu!");
+            }
+
+            printArtykulyBetween(root, firstArtykulIndex, lastArtykulIndex);
         }
     }
 
-    private void printArtykul(Node node, int index) {
+    private void printArtykulyBetween(Node node, int firstArtykulIndex, int lastArtykulIndex) {
         if(node.getDepth() > 3) return;
 
         if(node.getDepth() == 3) {
@@ -91,13 +108,13 @@ public class Printer {
 
             int artykulIndex = Integer.parseInt(artykul);
 
-            if(index == artykulIndex) {
+            if(firstArtykulIndex <= artykulIndex && artykulIndex <= lastArtykulIndex) {
                 printNodeChildren(node);
             }
         }
 
         for(Node child : node.getChildren()) {
-            printArtykul(child, index);
+            printArtykulyBetween(child, firstArtykulIndex, lastArtykulIndex);
         }
     }
 
