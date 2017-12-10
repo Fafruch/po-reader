@@ -61,7 +61,8 @@ public class Printer {
 
             printNodeChildren(element);
         } else if(args[2].matches("^rozdział\\d+$")) {
-            int rozdzialIndex = Integer.parseInt(args[2].substring(8)) - 1;
+            String rozdzial = args[2].substring(8);
+            int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 
             if(rozdzialIndex >= root.getChildren().size() || rozdzialIndex < 0) {
                 throw new Error("Nie ma takiego rozdzialu!");
@@ -71,7 +72,8 @@ public class Printer {
 
             printNodeChildren(element);
         } else if(args[2].matches("^art.\\d+$")) {
-            int artykulIndex = Integer.parseInt(args[2].substring(4));
+            String artykul = args[2].substring(4);
+            int artykulIndex = Integer.parseInt(artykul);
 
             if(artykulIndex < 1 || artykulIndex > 243) {
                 throw new Error("Nie ma takiego artykulu!");
@@ -80,11 +82,12 @@ public class Printer {
             printArtykulyBetween(root, artykulIndex, artykulIndex);
         } else if(args[2].matches("^art.\\d+-\\d+$")) {
             int indexOfDash = args[2].indexOf('-');
-            int firstArtykulIndex = Integer.parseInt(args[2].substring(4, indexOfDash));
-            int lastArtykulIndex = Integer.parseInt(args[2].substring(indexOfDash + 1));
 
-            System.out.println(firstArtykulIndex);
-            System.out.println(lastArtykulIndex);
+            String firstArtykul = args[2].substring(4, indexOfDash);
+            String lastArtykul = args[2].substring(indexOfDash + 1);
+
+            int firstArtykulIndex = Integer.parseInt(firstArtykul);
+            int lastArtykulIndex = Integer.parseInt(lastArtykul);
 
             if(firstArtykulIndex > lastArtykulIndex) {
                 throw new Error("Niepoprawny zakres artykulow!");
