@@ -5,7 +5,6 @@ public class Node {
     private Node parent = null;
     private List<Node> children = new ArrayList<>();
     private int depth;
-    private int index = 0;
     private String data;
 
     public Node(int depth, String data) {
@@ -24,7 +23,6 @@ public class Node {
     }
 
     public void setParent(Node parent) {
-        parent.addChild(this);
         this.parent = parent;
     }
 
@@ -38,7 +36,6 @@ public class Node {
     }
 
     public void addChild(Node child) {
-        child.setParent(this);
         this.children.add(child);
     }
 
@@ -54,21 +51,12 @@ public class Node {
     }
 
 
-    public int getDeth() {
+    public int getDepth() {
         return this.depth;
     }
 
     public void setDepth(int depth) {
         this.depth = depth;
-    }
-
-
-    public int getIndex() {
-        return this.index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
 

@@ -60,6 +60,7 @@ public class Normalizer {
                     !nextLine.matches(patternDzial) &&
                     !nextLine.matches(patternRozdzial) &&
                     !nextLine.matches(patternArtykul) &&
+                    !nextLine.matches(patternUstep) &&
                     !nextLine.matches(patternPunkt)) {
 
                 if(currentLine.matches(patternKoniecNormalnie)) {
