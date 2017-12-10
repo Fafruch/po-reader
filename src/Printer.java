@@ -37,7 +37,7 @@ public class Printer {
         }
     }
 
-    public void printNodeChildren(Node node, int index) {
+    public void printNodeChildren(Node node) {
         for(int i = 1; i < node.getDepth(); i++) {
             System.out.print("  ");
         }
@@ -47,19 +47,48 @@ public class Printer {
         for(int i = 0; i < node.getChildren().size(); i++) {
             Node childrenNode = node.getChildren().get(i);
 
-            printNodeChildren(childrenNode, i);
+            printNodeChildren(childrenNode);
         }
     }
 
     public void printElements() {
-        System.out.println(args[2]);
-        if(args[2].matches("^Rozdział\\s\\d+$")) {
-            int index = Integer.parseInt(args[2].substring(9));
-            System.out.println(index);
-        }
+        //System.out.println(args[2]);
 
-        if(args[2].matches("")) {
+        args[2] = normalizeString(args[2]);
 
+        if(args[2].matches("^rozdział\\d+,dział\\d+$")) {
+            int indexOfComma = args[2].indexOf(',');
+            String rozdzial = args[2].substring(8, indexOfComma);
+            String dzial = args[2].substring(indexOfComma + 6);
+
+            int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
+            int dzialIndex = Integer.parseInt(dzial) - 1;
+
+            if(rozdzialIndex >= root.getChildren().size() || rozdzialIndex < 0) {
+                throw new Error("Nie ma takiego rozdzialu!");
+            }
+
+            if(dzialIndex >= root.getChildren().get(rozdzialIndex).getChildren().size() || dzialIndex < 0) {
+                throw new Error("Nie ma takiego dzialu!");
+            }
+
+            Node element = root.getChildren().get(rozdzialIndex).getChildren().get(dzialIndex);
+
+            printNodeChildren(element);
+        } else if(args[2].matches("^rozdział\\d+$")) {
+            int rozdzialIndex = Integer.parseInt(args[2].substring(8)) - 1;
+
+            if(rozdzialIndex >= root.getChildren().size() || rozdzialIndex < 0) {
+                throw new Error("Nie ma takiego rozdzialu!");
+            }
+
+            Node element = root.getChildren().get(rozdzialIndex);
+
+            printNodeChildren(element);
         }
+    }
+
+    private String normalizeString(String string) {
+        return string.replaceAll("\\s+","").toLowerCase();
     }
 }
