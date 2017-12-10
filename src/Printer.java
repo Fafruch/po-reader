@@ -98,6 +98,26 @@ public class Printer {
             }
 
             printArtykulyBetween(root, firstArtykulIndex, lastArtykulIndex);
+        } else if(args[2].matches("^art.\\d+,ust.\\d+$")) {
+            int indexOfComma = args[2].indexOf(',');
+
+            String artykul = args[2].substring(4, indexOfComma);
+            String ustep = args[2].substring(indexOfComma + 5);
+
+            int artykulIndex = Integer.parseInt(artykul);
+            int ustepIndex = Integer.parseInt(ustep) - 1;
+
+            if(artykulIndex < 1 || artykulIndex > 243) {
+                throw new Error("Nie ma takiego artykulu!");
+            }
+
+            Node artykulNode = getArtykul(root, artykulIndex);
+
+            if(artykulNode == null) {
+                throw new Error("Nie znaleziono takiego artykulu!");
+            }
+
+            printNodeChildren(artykulNode.getChildren().get(ustepIndex));
         }
     }
 
@@ -133,5 +153,31 @@ public class Printer {
 
             printNodeChildren(childrenNode);
         }
+    }
+
+    private Node getArtykul(Node node, int index) {
+        if(node.getDepth() == 3) {
+            String data = node.getData();
+            int lastIndexOfDot = data.lastIndexOf('.');
+            String artykul = node.getData().substring(5, lastIndexOfDot);
+
+            int artykulIndex = Integer.parseInt(artykul);
+
+            if(artykulIndex == index) {
+                return node;
+            }
+        }
+
+        if(node.getDepth() <= 2) {
+            for(Node child : node.getChildren()) {
+                Node result = getArtykul(child, index);
+
+                if(result != null) {
+                    return result;
+                }
+            }
+        }
+
+        return null;
     }
 }
