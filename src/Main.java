@@ -25,8 +25,8 @@ public class Main {
             Parser parser = new Parser(storedFile);
             Node dataTree = parser.parseToTree(emptyDataTree);
 
-            Printer printer = new Printer(dataTree, args);
-            printer.print();
+            Printer printer = new Printer(args);
+            printer.print(dataTree);
 
         } catch(IOException ex) {
             System.out.println("Podales zla sciezke!");

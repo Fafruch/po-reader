@@ -1,13 +1,14 @@
 public class Printer {
-    private Node root;
     private String[] args;
+    private Node root;
 
-    public Printer(Node root, String[] args) {
-        this.root = root;
+    public Printer(String[] args) {
         this.args = args;
     }
 
-    public void print() {
+    public void print(Node root) {
+        this.root = root;
+
         if(this.args[1].equals("-t")) {
             printTableOfContents(root, 0);
         } else if (this.args[1].equals("-e")) {
@@ -122,8 +123,6 @@ public class Printer {
     }
 
     private void printArtykulyBetween(Node node, int firstArtykulIndex, int lastArtykulIndex) {
-        if(node.getDepth() > 3) return;
-
         if(node.getDepth() == 3) {
             String data = node.getData();
             int lastIndexOfDot = data.lastIndexOf('.');
@@ -134,6 +133,8 @@ public class Printer {
             if(firstArtykulIndex <= artykulIndex && artykulIndex <= lastArtykulIndex) {
                 printNodeChildren(node);
             }
+
+            return;
         }
 
         for(Node child : node.getChildren()) {
