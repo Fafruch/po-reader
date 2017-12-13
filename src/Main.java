@@ -5,15 +5,12 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        /*for(String arg : args) {
-            System.out.println(arg);
-        }*/
         if(args.length < 2) {
             throw new Error("You passed too few arugments!");
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
-            Node root = new Node(0, "", null);
+            Node emptyDataTree = new Node(0, "", null);
             ArrayList<String> storedFile = new ArrayList<>();
 
             String line;
@@ -26,9 +23,9 @@ public class Main {
             storedFile = normalizer.connectLines(storedFile);
 
             Parser parser = new Parser(storedFile);
-            Node parsedRoot = parser.parseToTree(root);
+            Node dataTree = parser.parseToTree(emptyDataTree);
 
-            Printer printer = new Printer(parsedRoot, args);
+            Printer printer = new Printer(dataTree, args);
             printer.print();
 
         } catch(IOException ex) {

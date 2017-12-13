@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-    private Node parent = null;
     private List<Node> children = new ArrayList<>();
     private int depth;
     private String data;
+    private Node parent = null;
 
     public Node(int depth, String data) {
         this.depth = depth;
@@ -26,24 +26,12 @@ public class Node {
         this.parent = parent;
     }
 
-    public void removeParent() {
-        this.parent = null;
-    }
-
-    public void addNewChild(int depth, String data) {
-        Node child = new Node(depth, data, this);
-        this.children.add(child);
-    }
-
     public void addChild(Node child) {
         this.children.add(child);
     }
 
     public boolean isLeaf() {
-        if(this.children.size() == 0)
-            return true;
-        else
-            return false;
+        return this.children.size() == 0;
     }
 
     public boolean isRoot() {
@@ -55,16 +43,7 @@ public class Node {
         return this.depth;
     }
 
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
-
     public String getData() {
         return this.data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 }
