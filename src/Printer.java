@@ -41,7 +41,7 @@ public class Printer {
         Normalizer normalizer = new Normalizer();
         args[2] = normalizer.normalizeString(args[2]);
 
-        if(args[2].matches("^rozdział\\d+,dział\\d+$")) {
+        if(args[2].matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
             String rozdzial = args[2].substring(8, indexOfComma);
             String dzial = args[2].substring(indexOfComma + 6);
@@ -60,7 +60,7 @@ public class Printer {
             Node element = root.getChildren().get(rozdzialIndex).getChildren().get(dzialIndex);
 
             printNodeChildren(element);
-        } else if(args[2].matches("^rozdział\\d+$")) {
+        } else if(args[2].matches("^rozdzia[łl]\\d+$")) {
             String rozdzial = args[2].substring(8);
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 

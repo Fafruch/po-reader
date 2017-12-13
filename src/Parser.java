@@ -3,13 +3,6 @@ import java.util.Stack;
 
 public class Parser {
     private ArrayList<String> storedFile;
-    String patternRozdzial = "^Rozdział \\w*$";
-    String patternDzial = "^([A-Z,ŻŹĆĄŚĘŁÓŃ](\\s)?)+$";
-    String patternArtykul = "^(Art. )(\\d)+(.)$";
-    String patternUstep = "^(\\d+\\. )(.)*$";
-    String patternPunkt = "^(\\d+)\\)(.)*$";
-    String patternKazdaLinia = "^(.)*$";
-
     public Parser(ArrayList<String> storedFile) {
         this.storedFile = storedFile;
     }
@@ -19,18 +12,16 @@ public class Parser {
         arrayListStack.add(root);
 
         for(String line : storedFile) {
-            // System.out.println(line);
-
-            boolean lineIsRodzial = line.matches(patternRozdzial);
-            boolean lineIsDzial = line.matches(patternDzial);
-            boolean lineIsArtykul = line.matches(patternArtykul);
-            boolean lineIsUstep = line.matches(patternUstep) || (
-                    line.matches(patternKazdaLinia) &&
-                            !line.matches(patternRozdzial) &&
-                            !line.matches(patternDzial) &&
-                            !line.matches(patternUstep) &&
-                            !line.matches(patternPunkt));
-            boolean lineIsPunkt = line.matches(patternPunkt);
+            boolean lineIsRodzial = line.matches(Pattern.ROZDZIAL);
+            boolean lineIsDzial = line.matches(Pattern.DZIAL);
+            boolean lineIsArtykul = line.matches(Pattern.ARTYKUL);
+            boolean lineIsUstep = line.matches(Pattern.USTEP) || (
+                    line.matches(Pattern.KAZDA_LINIA) &&
+                            !line.matches(Pattern.ROZDZIAL) &&
+                            !line.matches(Pattern.DZIAL) &&
+                            !line.matches(Pattern.USTEP) &&
+                            !line.matches(Pattern.PUNKT));
+            boolean lineIsPunkt = line.matches(Pattern.PUNKT);
 
             int depth = 0;
 

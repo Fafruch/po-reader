@@ -1,20 +1,12 @@
 import java.util.ArrayList;
 
 public class Normalizer {
-    String patternRozdzial = "^Rozdział \\w*$";
-    String patternDzial = "^([A-Z,ŻŹĆĄŚĘŁÓŃ](\\s)?)+$";
-    String patternArtykul = "^(Art. )(\\d)+(.)$";
-    String patternUstep = "^(\\d+\\. )(.)*$";
-    String patternPunkt = "^(\\d+)\\)(.)*$";
-    String patternKoniecMyslnikiem = "^(.)*-$";
-    String patternKoniecNormalnie = "^(.)*[^-]$";
-
     public ArrayList<String> cleanFile(ArrayList<String> file) {
         ArrayList<String> cleanedFile = new ArrayList<>();
         boolean contentStarted = false;
 
         for(String line : file) {
-            if(line.matches(patternRozdzial)) {
+            if(line.matches(Pattern.ROZDZIAL)) {
                 contentStarted = true;
             }
 
@@ -46,20 +38,20 @@ public class Normalizer {
             String connectedLines = null;
             boolean wasConnecting = false;
 
-            while((currentLine.matches(patternKoniecNormalnie) ||
-                    currentLine.matches(patternKoniecMyslnikiem)) &&
-                    !currentLine.matches(patternDzial) &&
-                    !currentLine.matches(patternRozdzial) &&
-                    !currentLine.matches(patternArtykul) &&
-                    (nextLine.matches(patternKoniecMyslnikiem) ||
-                            nextLine.matches(patternKoniecNormalnie)) &&
-                    !nextLine.matches(patternDzial) &&
-                    !nextLine.matches(patternRozdzial) &&
-                    !nextLine.matches(patternArtykul) &&
-                    !nextLine.matches(patternUstep) &&
-                    !nextLine.matches(patternPunkt)) {
+            while((currentLine.matches(Pattern.KONIEC_MYSLNIKIEM) ||
+                    currentLine.matches(Pattern.KONIEC_NORMALNIE)) &&
+                    !currentLine.matches(Pattern.DZIAL) &&
+                    !currentLine.matches(Pattern.ROZDZIAL) &&
+                    !currentLine.matches(Pattern.ARTYKUL) &&
+                    (nextLine.matches(Pattern.KONIEC_MYSLNIKIEM) ||
+                            nextLine.matches(Pattern.KONIEC_NORMALNIE)) &&
+                    !nextLine.matches(Pattern.DZIAL) &&
+                    !nextLine.matches(Pattern.ROZDZIAL) &&
+                    !nextLine.matches(Pattern.ARTYKUL) &&
+                    !nextLine.matches(Pattern.USTEP) &&
+                    !nextLine.matches(Pattern.PUNKT)) {
 
-                if(currentLine.matches(patternKoniecNormalnie)) {
+                if(currentLine.matches(Pattern.KONIEC_NORMALNIE)) {
                     connectedLines = currentLine + " " + nextLine;
                 } else {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length()-1);
