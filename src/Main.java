@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        if(args.length < 2) {
-            throw new Error("You passed too few arugments!");
-        }
-
         try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
+            if(args.length < 2) {
+                throw new Error("You passed too few arguments!");
+            } else if (args.length < 3 && args[1].equals("-e")) {
+                throw new Error("You passed too few arguments for -e option!");
+            }
+
             Node emptyDataTree = new Node(0, "", null);
             ArrayList<String> storedFile = new ArrayList<>();
 
@@ -30,7 +32,7 @@ public class Main {
 
         } catch(IOException | Error ex) {
             if(ex instanceof IOException) {
-                System.out.println("Podales zla sciezke!");
+                System.out.println("Wrong path! Could not open file.");
             } else {
                 System.out.println(ex.getMessage());
             }
