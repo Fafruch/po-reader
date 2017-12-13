@@ -16,7 +16,6 @@ public class Parser {
             boolean lineIsDzial = line.matches(Pattern.DZIAL);
             boolean lineIsArtykul = line.matches(Pattern.ARTYKUL);
             boolean lineIsUstep = line.matches(Pattern.USTEP) || (
-                    line.matches(Pattern.KAZDA_LINIA) &&
                             !line.matches(Pattern.ROZDZIAL) &&
                             !line.matches(Pattern.DZIAL) &&
                             !line.matches(Pattern.USTEP) &&

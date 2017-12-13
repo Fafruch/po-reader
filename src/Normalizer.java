@@ -38,30 +38,30 @@ public class Normalizer {
             String connectedLines = null;
             boolean wasConnecting = false;
 
-            while((currentLine.matches(Pattern.KONIEC_MYSLNIKIEM) ||
-                    currentLine.matches(Pattern.KONIEC_NORMALNIE)) &&
+            while((currentLine.matches(Pattern.KONIEC_MYSLNIKIEM) || currentLine.matches(Pattern.KONIEC_NORMALNIE)) &&
                     !currentLine.matches(Pattern.DZIAL) &&
                     !currentLine.matches(Pattern.ROZDZIAL) &&
                     !currentLine.matches(Pattern.ARTYKUL) &&
-                    (nextLine.matches(Pattern.KONIEC_MYSLNIKIEM) ||
-                            nextLine.matches(Pattern.KONIEC_NORMALNIE)) &&
+                    (nextLine.matches(Pattern.KONIEC_MYSLNIKIEM) || nextLine.matches(Pattern.KONIEC_NORMALNIE)) &&
                     !nextLine.matches(Pattern.DZIAL) &&
                     !nextLine.matches(Pattern.ROZDZIAL) &&
                     !nextLine.matches(Pattern.ARTYKUL) &&
                     !nextLine.matches(Pattern.USTEP) &&
                     !nextLine.matches(Pattern.PUNKT)) {
 
+                wasConnecting = true;
+
                 if(currentLine.matches(Pattern.KONIEC_NORMALNIE)) {
                     connectedLines = currentLine + " " + nextLine;
                 } else {
+                    // Matches Pattern.KONIEC_MYSLNIKIEM
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length()-1);
                     connectedLines = currentLineWithoutDash + nextLine;
                 }
 
-                wasConnecting = true;
-                i++;
-                if(i == file.size()-1) break;
+                if(i+1 == file.size()-1) break;
 
+                i++;
                 currentLine = connectedLines;
                 nextLine = file.get(i+1);
             }

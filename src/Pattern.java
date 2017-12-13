@@ -6,5 +6,4 @@ final class Pattern {
     static final String PUNKT = "^(\\d+)\\)(.)*$";
     static final String KONIEC_MYSLNIKIEM = "^(.)*-$";
     static final String KONIEC_NORMALNIE = "^(.)*[^-]$";
-    static final String KAZDA_LINIA = "^(.)*$";
 }
