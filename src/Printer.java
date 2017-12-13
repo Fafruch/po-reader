@@ -118,6 +118,10 @@ public class Printer {
                 throw new Error("Nie znaleziono takiego artykulu!");
             }
 
+            if(ustepIndex >= artykulNode.getChildren().size() || ustepIndex < 0) {
+                throw new Error("Nie ma takiego ustepu!");
+            }
+
             printNodeChildren(artykulNode.getChildren().get(ustepIndex));
         }
     }
@@ -166,16 +170,16 @@ public class Printer {
 
             if(artykulIndex == index) {
                 return node;
+            } else {
+                return null;
             }
         }
 
-        if(node.getDepth() <= 2) {
-            for(Node child : node.getChildren()) {
-                Node result = getArtykul(child, index);
+        for(Node child : node.getChildren()) {
+            Node result = getArtykul(child, index);
 
-                if(result != null) {
-                    return result;
-                }
+            if(result != null) {
+                return result;
             }
         }
 

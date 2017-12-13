@@ -28,9 +28,12 @@ public class Main {
             Printer printer = new Printer(args);
             printer.print(dataTree);
 
-        } catch(IOException ex) {
-            System.out.println("Podales zla sciezke!");
-            System.out.println(ex);
+        } catch(IOException | Error ex) {
+            if(ex instanceof IOException) {
+                System.out.println("Podales zla sciezke!");
+            } else {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 }
