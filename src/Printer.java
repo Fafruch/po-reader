@@ -1,13 +1,14 @@
 public class Printer {
-    private Node root;
     private String[] args;
+    private Node root;
 
-    public Printer(Node root, String[] args) {
-        this.root = root;
+    public Printer(String[] args) {
         this.args = args;
     }
 
-    public void print() {
+    public void print(Node root) {
+        this.root = root;
+
         if(this.args[1].equals("-t")) {
             printTableOfContents(root, 0);
         } else if (this.args[1].equals("-e")) {
@@ -41,7 +42,7 @@ public class Printer {
         Normalizer normalizer = new Normalizer();
         args[2] = normalizer.normalizeString(args[2]);
 
-        if(args[2].matches("^rozdział\\d+,dział\\d+$")) {
+        if(args[2].matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
             String rozdzial = args[2].substring(8, indexOfComma);
             String dzial = args[2].substring(indexOfComma + 6);
@@ -60,7 +61,7 @@ public class Printer {
             Node element = root.getChildren().get(rozdzialIndex).getChildren().get(dzialIndex);
 
             printNodeChildren(element);
-        } else if(args[2].matches("^rozdział\\d+$")) {
+        } else if(args[2].matches("^rozdzia[łl]\\d+$")) {
             String rozdzial = args[2].substring(8);
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 
@@ -117,13 +118,15 @@ public class Printer {
                 throw new Error("Nie znaleziono takiego artykulu!");
             }
 
+            if(ustepIndex >= artykulNode.getChildren().size() || ustepIndex < 0) {
+                throw new Error("Nie ma takiego ustepu!");
+            }
+
             printNodeChildren(artykulNode.getChildren().get(ustepIndex));
         }
     }
 
     private void printArtykulyBetween(Node node, int firstArtykulIndex, int lastArtykulIndex) {
-        if(node.getDepth() > 3) return;
-
         if(node.getDepth() == 3) {
             String data = node.getData();
             int lastIndexOfDot = data.lastIndexOf('.');
@@ -134,6 +137,8 @@ public class Printer {
             if(firstArtykulIndex <= artykulIndex && artykulIndex <= lastArtykulIndex) {
                 printNodeChildren(node);
             }
+
+            return;
         }
 
         for(Node child : node.getChildren()) {
@@ -165,16 +170,16 @@ public class Printer {
 
             if(artykulIndex == index) {
                 return node;
+            } else {
+                return null;
             }
         }
 
-        if(node.getDepth() <= 2) {
-            for(Node child : node.getChildren()) {
-                Node result = getArtykul(child, index);
+        for(Node child : node.getChildren()) {
+            Node result = getArtykul(child, index);
 
-                if(result != null) {
-                    return result;
-                }
+            if(result != null) {
+                return result;
             }
         }
 
