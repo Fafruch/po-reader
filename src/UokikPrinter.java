@@ -1,5 +1,5 @@
-public class KonstPrinter extends AbstractPrinter {
-    public KonstPrinter(String[] args) {
+public class UokikPrinter extends AbstractPrinter {
+    public UokikPrinter(String[] args) {
         super(args);
     }
 
