@@ -20,7 +20,7 @@ public class Main {
                 storedFile.add(line);
             }
 
-            /*UokikNormalizer uokikNormalizer = new UokikNormalizer();
+            UokikNormalizer uokikNormalizer = new UokikNormalizer();
             storedFile = uokikNormalizer.cleanFile(storedFile);
             storedFile = uokikNormalizer.moveUstepsToNewLine(storedFile);
             storedFile = uokikNormalizer.connectLines(storedFile);
@@ -30,20 +30,20 @@ public class Main {
             }
 
             UokikParser uokikParser = new UokikParser(storedFile);
-            Node dataTree = uokikParser.parseToTree(emptyDataTree);*/
+            Node dataTree = uokikParser.parseToTree(emptyDataTree);
 
-             /*for(int i = 0; i < storedFile.size(); i++) {
+             for(int i = 0; i < storedFile.size(); i++) {
                 System.out.println(i + "-> " + storedFile.get(i));
-            }*/
-            Normalizer normalizer = new Normalizer();
-            storedFile = normalizer.cleanFile(storedFile);
-            storedFile = normalizer.connectLines(storedFile);
+            }
+            /*KonstNormalizer konstNormalizer = new KonstNormalizer();
+            storedFile = konstNormalizer.cleanFile(storedFile);
+            storedFile = konstNormalizer.connectLines(storedFile);
 
-            KonstytucjaParser konstytucjaParser = new KonstytucjaParser(storedFile);
-            Node dataTree = konstytucjaParser.parseToTree(emptyDataTree);
+            KonstParser konstParser = new KonstParser(storedFile);
+            Node dataTree = konstParser.parseToTree(emptyDataTree);
 
-            Printer printer = new Printer(args);
-            printer.print(dataTree);
+            KonstPrinter konstPrinter = new KonstPrinter(args);
+            konstPrinter.print(dataTree);*/
 
         } catch(IOException | Error ex) {
             if(ex instanceof IOException) {

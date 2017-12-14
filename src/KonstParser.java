@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class KonstytucjaParser extends AbstractParser{
+public class KonstParser extends AbstractParser{
     private ArrayList<String> storedFile;
 
-    public KonstytucjaParser(ArrayList<String> storedFile) {
+    public KonstParser(ArrayList<String> storedFile) {
         this.storedFile = storedFile;
     }
 
@@ -12,15 +12,15 @@ public class KonstytucjaParser extends AbstractParser{
         arrayListStack.add(root);
 
         for (String line : storedFile) {
-            boolean lineIsRodzial = line.matches(Pattern.ROZDZIAL);
-            boolean lineIsDzial = line.matches(Pattern.DZIAL);
-            boolean lineIsArtykul = line.matches(Pattern.ARTYKUL);
-            boolean lineIsUstep = line.matches(Pattern.USTEP) || (
-                    !line.matches(Pattern.ROZDZIAL) &&
-                            !line.matches(Pattern.DZIAL) &&
-                            !line.matches(Pattern.USTEP) &&
-                            !line.matches(Pattern.PUNKT));
-            boolean lineIsPunkt = line.matches(Pattern.PUNKT);
+            boolean lineIsRodzial = line.matches(KonstPattern.ROZDZIAL);
+            boolean lineIsDzial = line.matches(KonstPattern.DZIAL);
+            boolean lineIsArtykul = line.matches(KonstPattern.ARTYKUL);
+            boolean lineIsUstep = line.matches(KonstPattern.USTEP) || (
+                    !line.matches(KonstPattern.ROZDZIAL) &&
+                            !line.matches(KonstPattern.DZIAL) &&
+                            !line.matches(KonstPattern.USTEP) &&
+                            !line.matches(KonstPattern.PUNKT));
+            boolean lineIsPunkt = line.matches(KonstPattern.PUNKT);
 
             int depth = 0;
             if (lineIsRodzial) {

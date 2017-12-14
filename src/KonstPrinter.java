@@ -1,8 +1,8 @@
-public class Printer {
+public class KonstPrinter {
     private String[] args;
     private Node root;
 
-    public Printer(String[] args) {
+    public KonstPrinter(String[] args) {
         this.args = args;
     }
 
@@ -39,8 +39,8 @@ public class Printer {
     }
 
     private void printElements() {
-        Normalizer normalizer = new Normalizer();
-        args[2] = normalizer.normalizeString(args[2]);
+        KonstNormalizer konstNormalizer = new KonstNormalizer();
+        args[2] = konstNormalizer.normalizeString(args[2]);
 
         if(args[2].matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
             int indexOfComma = args[2].indexOf(',');

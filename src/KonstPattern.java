@@ -1,4 +1,4 @@
-final class Pattern {
+final class KonstPattern {
     static final String ROZDZIAL = "^Rozdział \\w*$";
     static final String DZIAL = "^([A-Z,ŻŹĆĄŚĘŁÓŃ](\\s)?)+$";
     static final String ARTYKUL = "^(Art. )(\\d)+(.)$";
