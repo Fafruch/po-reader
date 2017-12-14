@@ -20,7 +20,17 @@ public class Main {
                 storedFile.add(line);
             }
 
-            Normalizer normalizer = new Normalizer();
+            UokikNormalizer uokikNormalizer = new UokikNormalizer();
+            storedFile = uokikNormalizer.cleanFile(storedFile);
+            storedFile = uokikNormalizer.moveUstepsToNewLine(storedFile);
+            storedFile = uokikNormalizer.connectLines(storedFile);
+            for(String lineToPrint : storedFile) {
+                System.out.println(lineToPrint);
+            }
+             /*for(int i = 0; i < storedFile.size(); i++) {
+                System.out.println(i + "-> " + storedFile.get(i));
+            }*/
+            /*Normalizer normalizer = new Normalizer();
             storedFile = normalizer.cleanFile(storedFile);
             storedFile = normalizer.connectLines(storedFile);
 
@@ -28,7 +38,7 @@ public class Main {
             Node dataTree = parser.parseToTree(emptyDataTree);
 
             Printer printer = new Printer(args);
-            printer.print(dataTree);
+            printer.print(dataTree);*/
 
         } catch(IOException | Error ex) {
             if(ex instanceof IOException) {

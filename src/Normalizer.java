@@ -73,6 +73,8 @@ public class Normalizer {
             }
         }
 
+        fileWithConnctedLines.add(file.get(file.size()-1));
+
         return fileWithConnctedLines;
     }
 
