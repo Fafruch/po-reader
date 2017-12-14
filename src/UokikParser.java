@@ -1,10 +1,8 @@
 import java.util.ArrayList;
 
 public class UokikParser extends AbstractParser {
-    private ArrayList<String> storedFile;
-
     public UokikParser(ArrayList<String> storedFile) {
-        this.storedFile = storedFile;
+        super(storedFile);
     }
 
     public Node parseToTree(Node root) {

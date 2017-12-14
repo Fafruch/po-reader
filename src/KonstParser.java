@@ -1,10 +1,8 @@
 import java.util.ArrayList;
 
 public class KonstParser extends AbstractParser{
-    private ArrayList<String> storedFile;
-
     public KonstParser(ArrayList<String> storedFile) {
-        this.storedFile = storedFile;
+        super(storedFile);
     }
 
     public Node parseToTree(Node root) {

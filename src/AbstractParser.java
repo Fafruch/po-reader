@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 
 abstract public class AbstractParser {
+    protected ArrayList<String> storedFile;
+
+    public AbstractParser(ArrayList<String> storedFile) {
+        this.storedFile = storedFile;
+    }
+
     public abstract Node parseToTree(Node root);
 
     protected void addNodeToTreeOrStack(ArrayList<Node> arrayListStack, Node newNode) {
