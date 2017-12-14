@@ -88,6 +88,38 @@ public class KonstPrinter extends AbstractPrinter {
             }
 
             printNodeChildren(artykulNode.getChildren().get(ustepIndex));
+        } else if(args[2].matches("^art.\\d+,ust.\\d+,pkt\\d+\\)$")) {
+            int firstIndexOfComma = args[2].indexOf(',');
+            int lastIndexOfComma = args[2].lastIndexOf(',');
+            int indexOfParenthesis = args[2].lastIndexOf(')');
+
+            String artykul = args[2].substring(4, firstIndexOfComma);
+            String ustep = args[2].substring(firstIndexOfComma + 5, lastIndexOfComma);
+            String punkt = args[2].substring(lastIndexOfComma + 4, indexOfParenthesis);
+
+            int artykulIndex = Integer.parseInt(artykul);
+            int ustepIndex = Integer.parseInt(ustep) - 1;
+            int punktIndex = Integer.parseInt(punkt) - 1;
+
+            if(artykulIndex < 1 || artykulIndex > 243) {
+                throw new Error("Nie ma takiego artykulu!");
+            }
+
+            Node artykulNode = getArtykul(root, artykulIndex);
+
+            if(artykulNode == null) {
+                throw new Error("Nie znaleziono takiego artykulu!");
+            }
+
+            if(ustepIndex >= artykulNode.getChildren().size() || ustepIndex < 0) {
+                throw new Error("Nie ma takiego ustepu!");
+            }
+
+            if(punktIndex >= artykulNode.getChildren().get(ustepIndex).getChildren().size() || punktIndex < 0) {
+                throw new Error("Nie ma takiego ustepu!");
+            }
+
+            printNodeChildren(artykulNode.getChildren().get(ustepIndex).getChildren().get(punktIndex));
         }
     }
 
