@@ -41,6 +41,10 @@ public class Main {
 
                 UokikPrinter uokikPrinter = new UokikPrinter(args);
                 uokikPrinter.print(dataTree);
+
+                /*for(String lineToPrint : storedFile) {
+                    System.out.println(lineToPrint);
+                }*/
             } else {
                 throw new Error("I can't parse this file. Sorry. : (");
             }

@@ -111,20 +111,6 @@ public class KonstPrinter extends AbstractPrinter {
         }
     }
 
-    private void printNodeChildren(Node node) {
-        for(int i = 1; i < node.getDepth(); i++) {
-            System.out.print("  ");
-        }
-
-        System.out.println(node.getData());
-
-        for(int i = 0; i < node.getChildren().size(); i++) {
-            Node childrenNode = node.getChildren().get(i);
-
-            printNodeChildren(childrenNode);
-        }
-    }
-
     private Node getArtykul(Node node, int index) {
         if(node.getDepth() == 3) {
             String data = node.getData();

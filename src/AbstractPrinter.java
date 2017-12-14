@@ -8,7 +8,6 @@ abstract public class AbstractPrinter {
 
     public void print(Node root) {
         this.root = root;
-
         if(this.args[1].equals("-t")) {
             printTableOfContents(root, 0);
         } else if (this.args[1].equals("-e")) {
@@ -35,6 +34,20 @@ abstract public class AbstractPrinter {
             Node childrenNode = node.getChildren().get(i);
 
             printTableOfContents(childrenNode, i);
+        }
+    }
+
+    protected void printNodeChildren(Node node) {
+        for(int i = 1; i < node.getDepth(); i++) {
+            System.out.print("  ");
+        }
+
+        System.out.println(node.getData());
+
+        for(int i = 0; i < node.getChildren().size(); i++) {
+            Node childrenNode = node.getChildren().get(i);
+
+            printNodeChildren(childrenNode);
         }
     }
 
