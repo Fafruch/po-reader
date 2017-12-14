@@ -35,8 +35,13 @@ public class UokikNormalizer {
             boolean wasConnecting = false;
 
             if(currentLine.matches(UokikPattern.DZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
-                connectedLines = currentLine + " " + nextLine;
+                connectedLines = currentLine + " - \"" + nextLine + "\"";
                 wasConnecting = true;
+                i++;
+            } else if(currentLine.matches(UokikPattern.ROZDZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
+                connectedLines = currentLine + " - \"" + nextLine + "\"";
+                wasConnecting = true;
+                i++;
             }
 
             while((currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
