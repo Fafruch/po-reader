@@ -1,4 +1,4 @@
-abstract public class AbstractPrinter implements IPrinter {
+abstract public class AbstractPrinter {
     protected String[] args;
     protected Node root;
 

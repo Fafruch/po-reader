@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-abstract public class AbstractParser implements IParser {
+abstract public class AbstractParser {
     public abstract Node parseToTree(Node root);
 
     protected void addNodeToTreeOrStack(ArrayList<Node> arrayListStack, Node newNode) {
