@@ -20,25 +20,30 @@ public class Main {
                 storedFile.add(line);
             }
 
-            UokikNormalizer uokikNormalizer = new UokikNormalizer();
+            /*UokikNormalizer uokikNormalizer = new UokikNormalizer();
             storedFile = uokikNormalizer.cleanFile(storedFile);
             storedFile = uokikNormalizer.moveUstepsToNewLine(storedFile);
             storedFile = uokikNormalizer.connectLines(storedFile);
+
             for(String lineToPrint : storedFile) {
                 System.out.println(lineToPrint);
             }
+
+            UokikParser uokikParser = new UokikParser(storedFile);
+            Node dataTree = uokikParser.parseToTree(emptyDataTree);*/
+
              /*for(int i = 0; i < storedFile.size(); i++) {
                 System.out.println(i + "-> " + storedFile.get(i));
             }*/
-            /*Normalizer normalizer = new Normalizer();
+            Normalizer normalizer = new Normalizer();
             storedFile = normalizer.cleanFile(storedFile);
             storedFile = normalizer.connectLines(storedFile);
 
-            Parser parser = new Parser(storedFile);
-            Node dataTree = parser.parseToTree(emptyDataTree);
+            KonstytucjaParser konstytucjaParser = new KonstytucjaParser(storedFile);
+            Node dataTree = konstytucjaParser.parseToTree(emptyDataTree);
 
             Printer printer = new Printer(args);
-            printer.print(dataTree);*/
+            printer.print(dataTree);
 
         } catch(IOException | Error ex) {
             if(ex instanceof IOException) {
