@@ -26,6 +26,9 @@ abstract public class AbstractPrinter {
             System.out.println("Ustep " + (index + 1) + ".");
         } else if (node.getDepth() == 5) {
             System.out.println("Punkt " + (index + 1) + ")");
+        } else if (node.getDepth() == 6) {
+            char litera = (char) (index + 97);
+            System.out.println("Litera " + litera + ")");
         } else {
             System.out.println(node.getData());
         }

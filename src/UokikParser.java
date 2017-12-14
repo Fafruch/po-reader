@@ -17,8 +17,10 @@ public class UokikParser extends AbstractParser {
                     !line.matches(UokikPattern.ROZDZIAL) &&
                             !line.matches(UokikPattern.DZIAL) &&
                             !line.matches(UokikPattern.USTEP) &&
-                            !line.matches(UokikPattern.PUNKT));
+                            !line.matches(UokikPattern.PUNKT) &&
+                            !line.matches(UokikPattern.LITERA));
             boolean lineIsPunkt = line.matches(UokikPattern.PUNKT);
+            boolean lineIsLitera = line.matches(UokikPattern.LITERA);
 
             int depth = 0;
             if (lineIsDzial) {
@@ -31,6 +33,8 @@ public class UokikParser extends AbstractParser {
                 depth = 4;
             } else if (lineIsPunkt) {
                 depth = 5;
+            } else if (lineIsLitera) {
+                depth = 6;
             }
 
             Node newNode = new Node(depth, line);

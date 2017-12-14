@@ -52,7 +52,8 @@ public class UokikNormalizer {
                         !nextLine.matches(UokikPattern.ROZDZIAL) &&
                         !nextLine.matches(UokikPattern.ARTYKUL) &&
                         !nextLine.matches(UokikPattern.USTEP) &&
-                        !nextLine.matches(UokikPattern.PUNKT)) {
+                        !nextLine.matches(UokikPattern.PUNKT) &&
+                        !nextLine.matches(UokikPattern.LITERA)) {
 
                     wasConnecting = true;
 
