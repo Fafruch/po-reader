@@ -31,8 +31,6 @@ public class UokikPrinter extends AbstractPrinter {
             int indexOfComma = args[2].indexOf(',');
             String dzial = args[2].substring(0, indexOfComma);
 
-            System.out.println(dzial);
-
             Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
             if(dzialNode == null) {
@@ -51,7 +49,7 @@ public class UokikPrinter extends AbstractPrinter {
 
             printNodeChildren(artykulNode);
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
-            int indexOfDash = args[2].indexOf('-');
+            /*int indexOfDash = args[2].indexOf('-');
 
             String firstArtykul = args[2].substring(0, indexOfDash);
             String lastArtykul = "art." + args[2].substring(indexOfDash + 1);
@@ -63,31 +61,26 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new Error("Niepoprawny zakres artykulow!");
             }
 
-            printArtykulyBetween(root, firstArtykul, lastArtykul);
-        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}(\\))$")) {
-            /*int indexOfComma = args[2].indexOf(',');
+            printArtykulyBetween(root, firstArtykul, lastArtykul);*/
+        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.$")) {
+            int indexOfComma = args[2].indexOf(',');
 
             String artykul = args[2].substring(0, indexOfComma);
-            String ustep = args[2].substring(indexOfComma + 1);
+            String ustep = args[2].substring(indexOfComma + 5);
 
-            int artykulIndex = Integer.parseInt(artykul);
-            int ustepIndex = Integer.parseInt(ustep) - 1;
-
-            if(artykulIndex < 1 || artykulIndex > 243) {
-                throw new Error("Nie ma takiego artykulu!");
-            }
-
-            Node artykulNode = getArtykul(root, artykulIndex);
+            Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
             if(artykulNode == null) {
                 throw new Error("Nie znaleziono takiego artykulu!");
             }
 
-            if(ustepIndex >= artykulNode.getChildren().size() || ustepIndex < 0) {
-                throw new Error("Nie ma takiego ustepu!");
+            Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
+
+            if(ustepNode == null) {
+                throw new Error("Nie znaleziono takiego ustepu!");
             }
 
-            printNodeChildren(artykulNode.getChildren().get(ustepIndex));*/
+            printNodeChildren(ustepNode);
         }
     }
 
