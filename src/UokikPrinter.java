@@ -109,6 +109,42 @@ public class UokikPrinter extends AbstractPrinter {
             }
 
             printNodeChildren(punktNode);
+        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\),lit.[a-z]{1,3}\\)$")) {
+            int firstIndexOfComma = args[2].indexOf(',');
+            int secondIndexOfComma = firstIndexOfComma + args[2].substring(firstIndexOfComma + 1).indexOf(',');
+            int firstIndexOfParenthesis = args[2].indexOf(')');
+            int lastIndexOfParenthesis = args[2].lastIndexOf(')');
+
+            String artykul = args[2].substring(0, firstIndexOfComma);
+            String ustep = args[2].substring(firstIndexOfComma + 5, secondIndexOfComma);
+            String punkt = args[2].substring(secondIndexOfComma + 5, firstIndexOfParenthesis);
+            String litera = args[2].substring(firstIndexOfParenthesis + 6, lastIndexOfParenthesis);
+
+            Node artykulNode = findNodeAtDepth(root, artykul, 3);
+
+            if (artykulNode == null) {
+                throw new Error("Nie znaleziono takiego artykulu!");
+            }
+
+            Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
+
+            if (ustepNode == null) {
+                throw new Error("Nie znaleziono takiego ustepu!");
+            }
+
+            Node punktNode = findNodeAtDepth(ustepNode, punkt, 5);
+
+            if (punktNode == null) {
+                throw new Error("Nie znaleziono takiego punktu!");
+            }
+
+            Node literaNode = findNodeAtDepth(punktNode, litera, 6);
+
+            if (literaNode == null) {
+                throw new Error("Nie znaleziono takiej litery!");
+            }
+
+            printNodeChildren(literaNode);
         }
     }
 
