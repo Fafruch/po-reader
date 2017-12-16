@@ -6,55 +6,74 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
-            if (args.length < 2) {
-                throw new Error("You passed too few arguments!");
-            } else if (args.length < 3 && args[1].equals("-e")) {
-                throw new Error("You passed too few arguments for -e option!");
-            }
 
-            Node emptyDataTree = new Node(0, "", null);
-            ArrayList<String> storedFile = new ArrayList<>();
+            checkArgs(args);
 
-            String line;
-            while ((line = br.readLine()) != null) {
-                storedFile.add(line);
-            }
+            ArrayList<String> file = convertFileToArrayList(br);
 
-            if (args[0].equals("konstytucja.txt")) {
-                KonstNormalizer konstNormalizer = new KonstNormalizer();
-                storedFile = konstNormalizer.cleanFile(storedFile);
-                storedFile = konstNormalizer.connectLines(storedFile);
+            runAppWith(args, file);
 
-                KonstParser konstParser = new KonstParser(storedFile);
-                Node dataTree = konstParser.parseToTree(emptyDataTree);
-
-                KonstPrinter konstPrinter = new KonstPrinter(args);
-                konstPrinter.print(dataTree);
-            } else if (args[0].equals("uokik.txt")) {
-                UokikNormalizer uokikNormalizer = new UokikNormalizer();
-                storedFile = uokikNormalizer.cleanFile(storedFile);
-                storedFile = uokikNormalizer.moveUstepsToNewLine(storedFile);
-                storedFile = uokikNormalizer.connectLines(storedFile);
-
-                UokikParser uokikParser = new UokikParser(storedFile);
-                Node dataTree = uokikParser.parseToTree(emptyDataTree);
-
-                UokikPrinter uokikPrinter = new UokikPrinter(args);
-                uokikPrinter.print(dataTree);
-
-                /*for(String lineToPrint : storedFile) {
-                    System.out.println(lineToPrint);
-                }*/
-            } else {
-                throw new Error("I can't parse this file. Sorry. : (");
-            }
-
-        } catch (IOException | Error ex) {
+        } catch (Exception ex) {
             if (ex instanceof IOException) {
                 System.out.println("Wrong path! Could not open file.");
             } else {
                 System.out.println(ex.getMessage());
             }
+        }
+    }
+
+    static private void checkArgs(String args[]) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("You passed too few arguments!");
+        } else if (args.length < 3 && args[1].equals("-e")) {
+            throw new IllegalArgumentException("You passed too few arguments for -e option!");
+        } else if (!(args[0].equals("konstytucja.txt") || args[0].equals("uokik.txt"))) {
+            throw new IllegalArgumentException("I'm not build for this file. Sorry. : (");
+        }
+    }
+
+    static private ArrayList<String> convertFileToArrayList(BufferedReader br) throws IOException {
+        ArrayList<String> storedFile = new ArrayList<>();
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            storedFile.add(line);
+        }
+
+        return storedFile;
+    }
+
+    static private void runAppWith(String args[], ArrayList<String> storedFile) {
+        Node emptyDataTree = new Node(0, "", null);
+        String filename = args[0];
+
+        if (filename.equals("konstytucja.txt")) {
+            // normalize file for easier tree build
+            KonstNormalizer konstNormalizer = new KonstNormalizer();
+            storedFile = konstNormalizer.cleanFile(storedFile);
+            storedFile = konstNormalizer.connectLines(storedFile);
+
+            // convert list of lines to tree of lines
+            KonstParser konstParser = new KonstParser(storedFile);
+            Node dataTree = konstParser.parseToTree(emptyDataTree);
+
+            // print lines based on user's input
+            KonstPrinter konstPrinter = new KonstPrinter(args);
+            konstPrinter.print(dataTree);
+        } else if (filename.equals("uokik.txt")) {
+            // normalize file for easier tree build
+            UokikNormalizer uokikNormalizer = new UokikNormalizer();
+            storedFile = uokikNormalizer.cleanFile(storedFile);
+            storedFile = uokikNormalizer.moveUstepsToNewLine(storedFile);
+            storedFile = uokikNormalizer.connectLines(storedFile);
+
+            // convert list of lines to tree of lines
+            UokikParser uokikParser = new UokikParser(storedFile);
+            Node dataTree = uokikParser.parseToTree(emptyDataTree);
+
+            // print lines based on user's input
+            UokikPrinter uokikPrinter = new UokikPrinter(args);
+            uokikPrinter.print(dataTree);
         }
     }
 }
