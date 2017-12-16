@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
+    static private ArrayList<Node> artykuly = new ArrayList<>();
     private List<Node> children = new ArrayList<>();
     private int depth;
     private String data;
@@ -45,5 +46,9 @@ public class Node {
 
     public String getData() {
         return this.data;
+    }
+
+    static public ArrayList<Node> getArtykuly() {
+        return artykuly;
     }
 }
