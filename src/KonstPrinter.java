@@ -7,7 +7,21 @@ public class KonstPrinter extends AbstractPrinter {
         KonstNormalizer konstNormalizer = new KonstNormalizer();
         args[2] = konstNormalizer.normalizeString(args[2]);
 
-        if(args[2].matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
+        // np. Rozdział 3
+        if(args[2].matches("^rozdzia[łl]\\d+$")) {
+            String rozdzial = args[2].substring(8);
+            int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
+
+            if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
+                throw new Error("Nie ma takiego rozdzialu!");
+            }
+
+            Node rozdzialNode = root.getChildren().get(rozdzialIndex);
+
+            printNodeChildren(rozdzialNode);
+
+            // np. Rozdział 3, dział 2
+        } else if(args[2].matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
             String rozdzial = args[2].substring(8, indexOfComma);
             String dzial = args[2].substring(indexOfComma + 6);
@@ -28,17 +42,8 @@ public class KonstPrinter extends AbstractPrinter {
             Node dzialNode = rozdzialNode.getChildren().get(dzialIndex);
 
             printNodeChildren(dzialNode);
-        } else if(args[2].matches("^rozdzia[łl]\\d+$")) {
-            String rozdzial = args[2].substring(8);
-            int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 
-            if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
-                throw new Error("Nie ma takiego rozdzialu!");
-            }
-
-            Node rozdzialNode = root.getChildren().get(rozdzialIndex);
-
-            printNodeChildren(rozdzialNode);
+            // np. Art. 13
         } else if(args[2].matches("^art.\\d+$")) {
             String artykul = args[2].substring(4);
             int artykulIndex = Integer.parseInt(artykul) - 1;
@@ -48,6 +53,8 @@ public class KonstPrinter extends AbstractPrinter {
             }
 
             printArtykulyBetween(artykulIndex, artykulIndex);
+
+            // np. Art. 13-17
         } else if(args[2].matches("^art.\\d+-\\d+$")) {
             int indexOfDash = args[2].indexOf('-');
 
@@ -67,6 +74,8 @@ public class KonstPrinter extends AbstractPrinter {
             }
 
             printArtykulyBetween(firstArtykulIndex, lastArtykulIndex);
+
+            // np. Art. 13, ust. 4
         } else if(args[2].matches("^art.\\d+,ust.\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
 
@@ -89,6 +98,8 @@ public class KonstPrinter extends AbstractPrinter {
             Node ustepNode = artykulNode.getChildren().get(ustepIndex);
 
             printNodeChildren(ustepNode);
+
+            // np. Art. 13-17, ust. 4, pkt 2)
         } else if(args[2].matches("^art.\\d+,ust.\\d+,pkt\\d+\\)$")) {
             int firstIndexOfComma = args[2].indexOf(',');
             int lastIndexOfComma = args[2].lastIndexOf(',');

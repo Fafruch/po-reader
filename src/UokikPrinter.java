@@ -7,9 +7,21 @@ public class UokikPrinter extends AbstractPrinter {
         KonstNormalizer konstNormalizer = new KonstNormalizer();
         args[2] = konstNormalizer.normalizeString(args[2]);
 
-        // System.out.println(args[2]);
+        // np. Dział IIIA
+        if(args[2].matches("^dzia[łl]\\w{1,4}$")) {
+            int indexOfComma = args[2].indexOf(',');
+            String dzial = args[2].substring(0, indexOfComma);
 
-        if(args[2].matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
+            Node dzialNode = findNodeAtDepth(root, dzial, 1);
+
+            if(dzialNode == null) {
+                throw new Error("Nie ma takiego dzialu!");
+            }
+
+            printNodeChildren(dzialNode);
+
+            // np. Dział IIIA, rozdział 2
+        } else if(args[2].matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
             String dzial = args[2].substring(0, indexOfComma);
             String rozdzial = args[2].substring(indexOfComma + 1);
@@ -27,17 +39,8 @@ public class UokikPrinter extends AbstractPrinter {
             }
 
             printNodeChildren(rozdzialNode);
-        } else if(args[2].matches("^dzia[łl]\\w{1,4}$")) {
-            int indexOfComma = args[2].indexOf(',');
-            String dzial = args[2].substring(0, indexOfComma);
 
-            Node dzialNode = findNodeAtDepth(root, dzial, 1);
-
-            if(dzialNode == null) {
-                throw new Error("Nie ma takiego dzialu!");
-            }
-
-            printNodeChildren(dzialNode);
+            // np. Art. 119j
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?$")) {
             String artykul = args[2];
 
@@ -48,6 +51,8 @@ public class UokikPrinter extends AbstractPrinter {
             }
 
             printNodeChildren(artykulNode);
+
+            // np. Art. 119j-121b
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
             int indexOfDash = args[2].indexOf('-');
 
@@ -62,6 +67,8 @@ public class UokikPrinter extends AbstractPrinter {
             }
 
             printArtykulyBetween(firstArtykul, lastArtykul);
+
+            // np. Art. 30a, ust. 2a.
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.$")) {
             int indexOfComma = args[2].indexOf(',');
 
@@ -81,6 +88,8 @@ public class UokikPrinter extends AbstractPrinter {
             }
 
             printNodeChildren(ustepNode);
+
+            // np. Art. 30a, ust. 2a., pkt 1a)
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\)$")) {
             int firstIndexOfComma = args[2].indexOf(',');
             int lastIndexOfComma = args[2].lastIndexOf(',');
@@ -109,6 +118,8 @@ public class UokikPrinter extends AbstractPrinter {
             }
 
             printNodeChildren(punktNode);
+
+            // np. Art. 30a, ust. 2a., pkt 1a), lit. b)
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\),lit.[a-z]{1,3}\\)$")) {
             int firstIndexOfComma = args[2].indexOf(',');
             int secondIndexOfComma = firstIndexOfComma + args[2].substring(firstIndexOfComma + 1).indexOf(',');
