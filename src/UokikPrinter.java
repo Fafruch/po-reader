@@ -3,7 +3,7 @@ public class UokikPrinter extends AbstractPrinter {
         super(args);
     }
 
-    protected void printElements() {
+    protected void printElements() throws NotFoundException, IllegalArgumentException {
         KonstNormalizer konstNormalizer = new KonstNormalizer();
         args[2] = konstNormalizer.normalizeString(args[2]);
 
@@ -15,7 +15,7 @@ public class UokikPrinter extends AbstractPrinter {
             Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
             if(dzialNode == null) {
-                throw new Error("Nie ma takiego dzialu!");
+                throw new NotFoundException("Nie ma takiego dzialu!");
             }
 
             printNodeChildren(dzialNode);
@@ -29,13 +29,13 @@ public class UokikPrinter extends AbstractPrinter {
             Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
             if(dzialNode == null) {
-                throw new Error("Nie ma takiego dzialu!");
+                throw new NotFoundException("Nie ma takiego dzialu!");
             }
 
             Node rozdzialNode = findNodeAtDepth(dzialNode, rozdzial, 2);
 
             if(rozdzialNode == null) {
-                throw new Error("Nie ma takiego rozdzialu!");
+                throw new NotFoundException("Nie ma takiego rozdzialu!");
             }
 
             printNodeChildren(rozdzialNode);
@@ -47,7 +47,7 @@ public class UokikPrinter extends AbstractPrinter {
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
             if(artykulNode == null) {
-                throw new Error("Nie ma takiego artykulu!");
+                throw new NotFoundException("Nie ma takiego artykulu!");
             }
 
             printNodeChildren(artykulNode);
@@ -63,7 +63,7 @@ public class UokikPrinter extends AbstractPrinter {
             System.out.println(lastArtykul);*/
 
             if(firstArtykul.compareTo(lastArtykul) > 0) {
-                throw new Error("Niepoprawny zakres artykulow!");
+                throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
             }
 
             printArtykulyBetween(firstArtykul, lastArtykul);
@@ -78,13 +78,13 @@ public class UokikPrinter extends AbstractPrinter {
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
             if(artykulNode == null) {
-                throw new Error("Nie znaleziono takiego artykulu!");
+                throw new NotFoundException("Nie znaleziono takiego artykulu!");
             }
 
             Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
             if(ustepNode == null) {
-                throw new Error("Nie znaleziono takiego ustepu!");
+                throw new NotFoundException("Nie znaleziono takiego ustepu!");
             }
 
             printNodeChildren(ustepNode);
@@ -102,19 +102,19 @@ public class UokikPrinter extends AbstractPrinter {
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
             if(artykulNode == null) {
-                throw new Error("Nie znaleziono takiego artykulu!");
+                throw new NotFoundException("Nie znaleziono takiego artykulu!");
             }
 
             Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
             if(ustepNode == null) {
-                throw new Error("Nie znaleziono takiego ustepu!");
+                throw new NotFoundException("Nie znaleziono takiego ustepu!");
             }
 
             Node punktNode = findNodeAtDepth(ustepNode, punkt, 5);
 
             if(punktNode == null) {
-                throw new Error("Nie znaleziono takiego punktu!");
+                throw new NotFoundException("Nie znaleziono takiego punktu!");
             }
 
             printNodeChildren(punktNode);
@@ -134,25 +134,25 @@ public class UokikPrinter extends AbstractPrinter {
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
             if (artykulNode == null) {
-                throw new Error("Nie znaleziono takiego artykulu!");
+                throw new NotFoundException("Nie znaleziono takiego artykulu!");
             }
 
             Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
             if (ustepNode == null) {
-                throw new Error("Nie znaleziono takiego ustepu!");
+                throw new NotFoundException("Nie znaleziono takiego ustepu!");
             }
 
             Node punktNode = findNodeAtDepth(ustepNode, punkt, 5);
 
             if (punktNode == null) {
-                throw new Error("Nie znaleziono takiego punktu!");
+                throw new NotFoundException("Nie znaleziono takiego punktu!");
             }
 
             Node literaNode = findNodeAtDepth(punktNode, litera, 6);
 
             if (literaNode == null) {
-                throw new Error("Nie znaleziono takiej litery!");
+                throw new NotFoundException("Nie znaleziono takiej litery!");
             }
 
             printNodeChildren(literaNode);

@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,12 +14,10 @@ public class Main {
 
             runAppWith(args, file);
 
+        } catch (FileNotFoundException e) {
+            System.out.println("Wrong path: " + args[0] + ". Could not find file.");
         } catch (Exception ex) {
-            if (ex instanceof IOException) {
-                System.out.println("Wrong path! Could not open file.");
-            } else {
-                System.out.println(ex.getMessage());
-            }
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -43,7 +42,7 @@ public class Main {
         return storedFile;
     }
 
-    static private void runAppWith(String args[], ArrayList<String> storedFile) {
+    static private void runAppWith(String args[], ArrayList<String> storedFile) throws NotFoundException, IllegalArgumentException {
         Node emptyDataTree = new Node(0, "", null);
         String filename = args[0];
 

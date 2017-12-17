@@ -3,7 +3,7 @@ public class KonstPrinter extends AbstractPrinter {
         super(args);
     }
 
-    protected void printElements() {
+    protected void printElements() throws NotFoundException, IllegalArgumentException{
         KonstNormalizer konstNormalizer = new KonstNormalizer();
         args[2] = konstNormalizer.normalizeString(args[2]);
 
@@ -13,7 +13,7 @@ public class KonstPrinter extends AbstractPrinter {
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 
             if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
-                throw new Error("Nie ma takiego rozdzialu!");
+                throw new NotFoundException("Nie ma takiego rozdzialu!");
             }
 
             Node rozdzialNode = root.getChildren().get(rozdzialIndex);
@@ -30,13 +30,13 @@ public class KonstPrinter extends AbstractPrinter {
             int dzialIndex = Integer.parseInt(dzial) - 1;
 
             if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
-                throw new Error("Nie ma takiego rozdzialu!");
+                throw new NotFoundException("Nie ma takiego rozdzialu!");
             }
 
             Node rozdzialNode = root.getChildren().get(rozdzialIndex);
 
             if(dzialIndex < 0 || dzialIndex >= root.getChildren().get(rozdzialIndex).getChildren().size()) {
-                throw new Error("Nie ma takiego dzialu!");
+                throw new NotFoundException("Nie ma takiego dzialu!");
             }
 
             Node dzialNode = rozdzialNode.getChildren().get(dzialIndex);
@@ -49,7 +49,7 @@ public class KonstPrinter extends AbstractPrinter {
             int artykulIndex = Integer.parseInt(artykul) - 1;
 
             if(artykulIndex < 0 || artykulIndex > Node.getArtykuly().size() - 1) {
-                throw new Error("Nie ma takiego artykulu!");
+                throw new NotFoundException("Nie ma takiego artykulu!");
             }
 
             printArtykulyBetween(artykulIndex, artykulIndex);
@@ -65,12 +65,12 @@ public class KonstPrinter extends AbstractPrinter {
             int lastArtykulIndex = Integer.parseInt(lastArtykul) - 1;
 
             if(firstArtykulIndex > lastArtykulIndex) {
-                throw new Error("Niepoprawny zakres artykulow!");
+                throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
             }
 
             if(firstArtykulIndex < 0 || firstArtykulIndex > Node.getArtykuly().size() - 1
                     || lastArtykulIndex < 0 || lastArtykulIndex > Node.getArtykuly().size() - 1) {
-                throw new Error("Nie ma takiego artykulu!");
+                throw new NotFoundException("Nie ma takiego artykulu!");
             }
 
             printArtykulyBetween(firstArtykulIndex, lastArtykulIndex);
@@ -86,13 +86,13 @@ public class KonstPrinter extends AbstractPrinter {
             int ustepIndex = Integer.parseInt(ustep) - 1;
 
             if(artykulIndex < 0 || artykulIndex > Node.getArtykuly().size() - 1) {
-                throw new Error("Nie ma takiego artykulu!");
+                throw new NotFoundException("Nie ma takiego artykulu!");
             }
 
             Node artykulNode = Node.getArtykuly().get(artykulIndex);
 
             if(ustepIndex < 0 || ustepIndex >= artykulNode.getChildren().size()) {
-                throw new Error("Nie ma takiego ustepu!");
+                throw new NotFoundException("Nie ma takiego ustepu!");
             }
 
             Node ustepNode = artykulNode.getChildren().get(ustepIndex);
@@ -114,19 +114,19 @@ public class KonstPrinter extends AbstractPrinter {
             int punktIndex = Integer.parseInt(punkt) - 1;
 
             if(artykulIndex < 0 || artykulIndex > Node.getArtykuly().size() - 1) {
-                throw new Error("Nie ma takiego artykulu!");
+                throw new NotFoundException("Nie ma takiego artykulu!");
             }
 
             Node artykulNode = Node.getArtykuly().get(artykulIndex);
 
             if(ustepIndex < 0 || ustepIndex >= artykulNode.getChildren().size()) {
-                throw new Error("Nie ma takiego ustepu!");
+                throw new NotFoundException("Nie ma takiego ustepu!");
             }
 
             Node ustepNode = artykulNode.getChildren().get(ustepIndex);
 
             if(punktIndex < 0 || punktIndex >= ustepNode.getChildren().size()) {
-                throw new Error("Nie ma takiego punktu!");
+                throw new NotFoundException("Nie ma takiego punktu!");
             }
 
             Node punktNode = ustepNode.getChildren().get(punktIndex);

@@ -6,14 +6,14 @@ abstract public class AbstractPrinter {
         this.args = args;
     }
 
-    public void print(Node root) {
+    public void print(Node root) throws NotFoundException, IllegalArgumentException{
         this.root = root;
         if(this.args[1].equals("-t")) {
             printTableOfContents(root, 0);
         } else if (this.args[1].equals("-e")) {
             printElements();
         } else {
-            throw new Error("You've provided not a valid mode. Use '-t' for table of contents or '-e' for particular element.");
+            throw new IllegalArgumentException("You've provided not a valid mode. Use '-t' for table of contents or '-e' for particular element.");
         }
     }
 
@@ -54,5 +54,5 @@ abstract public class AbstractPrinter {
         }
     }
 
-    abstract protected void printElements();
+    abstract protected void printElements() throws NotFoundException, IllegalArgumentException;
 }
