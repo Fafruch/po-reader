@@ -7,7 +7,7 @@ public class UokikPrinter extends AbstractPrinter {
         KonstNormalizer konstNormalizer = new KonstNormalizer();
         args[2] = konstNormalizer.normalizeString(args[2]);
 
-        System.out.println(args[2]);
+        // System.out.println(args[2]);
 
         if(args[2].matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
             int indexOfComma = args[2].indexOf(',');
@@ -49,19 +49,19 @@ public class UokikPrinter extends AbstractPrinter {
 
             printNodeChildren(artykulNode);
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
-            /*int indexOfDash = args[2].indexOf('-');
+            int indexOfDash = args[2].indexOf('-');
 
             String firstArtykul = args[2].substring(0, indexOfDash);
             String lastArtykul = "art." + args[2].substring(indexOfDash + 1);
 
-            System.out.println(firstArtykul);
-            System.out.println(lastArtykul);
+            /*System.out.println(firstArtykul);
+            System.out.println(lastArtykul);*/
 
             if(firstArtykul.compareTo(lastArtykul) > 0) {
                 throw new Error("Niepoprawny zakres artykulow!");
             }
 
-            printArtykulyBetween(root, firstArtykul, lastArtykul);*/
+            printArtykulyBetween(firstArtykul, lastArtykul);
         } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.$")) {
             int indexOfComma = args[2].indexOf(',');
 
@@ -148,27 +148,34 @@ public class UokikPrinter extends AbstractPrinter {
         }
     }
 
-    private void printArtykulyBetween(Node node, String firstArtykulName, String lastArtykulName) {
-        if(node.getDepth() == 3) {
-            String data = node.getData();
-            UokikNormalizer uokikNormalizer = new UokikNormalizer();
-            String normalizedData = uokikNormalizer.normalizeString(data);
+    private void printArtykulyBetween(String firstArtykulName, String lastArtykulName) {
+        UokikNormalizer uokikNormalizer = new UokikNormalizer();
+        String normalizedData;
 
-            System.out.println(firstArtykulName);
-            System.out.println(firstArtykulName.compareTo(normalizedData) <= -1);
-            System.out.println(normalizedData);
-            System.out.println(normalizedData.compareTo(lastArtykulName) <= -1);
-            System.out.println(lastArtykulName);
+        for(int i = 0; i < Node.getArtykuly().size(); i++) {
+            Node currentNode = Node.getArtykuly().get(i);
+            String data = currentNode.getData();
 
-            if(firstArtykulName.compareTo(normalizedData) <= -1  && normalizedData.compareTo(lastArtykulName) <= -1) {
-                printNodeChildren(node);
+            normalizedData = uokikNormalizer.normalizeString(data);
+            normalizedData = uokikNormalizer.removeLastChar(normalizedData);
+
+            /* test */
+            /*System.out.println("");
+            System.out.println("1. " + firstArtykulName + ", length: " + firstArtykulName.length());
+            System.out.println("2. " + (firstArtykulName.compareTo(normalizedData) <= 0));
+            System.out.println("3. " + normalizedData + ", length: " + normalizedData.length());
+            System.out.println("4. " + (normalizedData.compareTo(lastArtykulName) <= 0));
+            System.out.println("5. " + lastArtykulName + ", length: " + lastArtykulName.length());
+            System.out.println("");*/
+            /* end_test */
+
+            if(firstArtykulName.compareTo(normalizedData) <= 0
+                    && normalizedData.compareTo(lastArtykulName) <= 0
+                    && normalizedData.length() >= firstArtykulName.length()
+                    && normalizedData.length() >= lastArtykulName.length()) {
+
+                printNodeChildren(currentNode);
             }
-
-            return;
-        }
-
-        for(Node child : node.getChildren()) {
-            printArtykulyBetween(child, firstArtykulName, lastArtykulName);
         }
     }
 
