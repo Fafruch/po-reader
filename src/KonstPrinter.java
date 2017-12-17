@@ -15,28 +15,30 @@ public class KonstPrinter extends AbstractPrinter {
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
             int dzialIndex = Integer.parseInt(dzial) - 1;
 
-            if(rozdzialIndex >= root.getChildren().size() || rozdzialIndex < 0) {
+            if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
                 throw new Error("Nie ma takiego rozdzialu!");
             }
 
-            if(dzialIndex >= root.getChildren().get(rozdzialIndex).getChildren().size() || dzialIndex < 0) {
+            Node rozdzialNode = root.getChildren().get(rozdzialIndex);
+
+            if(dzialIndex < 0 || dzialIndex >= root.getChildren().get(rozdzialIndex).getChildren().size()) {
                 throw new Error("Nie ma takiego dzialu!");
             }
 
-            Node element = root.getChildren().get(rozdzialIndex).getChildren().get(dzialIndex);
+            Node dzialNode = rozdzialNode.getChildren().get(dzialIndex);
 
-            printNodeChildren(element);
+            printNodeChildren(dzialNode);
         } else if(args[2].matches("^rozdzia[łl]\\d+$")) {
             String rozdzial = args[2].substring(8);
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 
-            if(rozdzialIndex >= root.getChildren().size() || rozdzialIndex < 0) {
+            if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
                 throw new Error("Nie ma takiego rozdzialu!");
             }
 
-            Node element = root.getChildren().get(rozdzialIndex);
+            Node rozdzialNode = root.getChildren().get(rozdzialIndex);
 
-            printNodeChildren(element);
+            printNodeChildren(rozdzialNode);
         } else if(args[2].matches("^art.\\d+$")) {
             String artykul = args[2].substring(4);
             int artykulIndex = Integer.parseInt(artykul) - 1;
@@ -80,17 +82,14 @@ public class KonstPrinter extends AbstractPrinter {
 
             Node artykulNode = Node.getArtykuly().get(artykulIndex);
 
-            if(artykulNode == null) {
-                throw new Error("Nie znaleziono takiego artykulu!");
-            }
-
-            if(ustepIndex >= artykulNode.getChildren().size() || ustepIndex < 0) {
+            if(ustepIndex < 0 || ustepIndex >= artykulNode.getChildren().size()) {
                 throw new Error("Nie ma takiego ustepu!");
             }
 
-            printNodeChildren(artykulNode.getChildren().get(ustepIndex));
+            Node ustepNode = artykulNode.getChildren().get(ustepIndex);
+
+            printNodeChildren(ustepNode);
         } else if(args[2].matches("^art.\\d+,ust.\\d+,pkt\\d+\\)$")) {
-            String[] argsSplit = args[2].split(",");
             int firstIndexOfComma = args[2].indexOf(',');
             int lastIndexOfComma = args[2].lastIndexOf(',');
             int indexOfParenthesis = args[2].lastIndexOf(')');
@@ -103,46 +102,33 @@ public class KonstPrinter extends AbstractPrinter {
             int ustepIndex = Integer.parseInt(ustep) - 1;
             int punktIndex = Integer.parseInt(punkt) - 1;
 
-            for(String part : argsSplit) {
-                System.out.println(part);
-            }
-            System.out.println(artykul);
-            System.out.println(artykulIndex);
-            System.out.println(ustep);
-            System.out.println(ustepIndex);
-            System.out.println(punkt);
-            System.out.println(punktIndex);
-
-
             if(artykulIndex < 0 || artykulIndex > Node.getArtykuly().size() - 1) {
                 throw new Error("Nie ma takiego artykulu!");
             }
 
             Node artykulNode = Node.getArtykuly().get(artykulIndex);
 
-            if(artykulNode == null) {
-                throw new Error("Nie znaleziono takiego artykulu!");
-            }
-
-            if(ustepIndex >= artykulNode.getChildren().size() || ustepIndex < 0) {
+            if(ustepIndex < 0 || ustepIndex >= artykulNode.getChildren().size()) {
                 throw new Error("Nie ma takiego ustepu!");
             }
 
-            if(punktIndex >= artykulNode.getChildren().get(ustepIndex).getChildren().size() || punktIndex < 0) {
-                throw new Error("Nie ma takiego ustepu!");
+            Node ustepNode = artykulNode.getChildren().get(ustepIndex);
+
+            if(punktIndex < 0 || punktIndex >= ustepNode.getChildren().size()) {
+                throw new Error("Nie ma takiego punktu!");
             }
 
-            printNodeChildren(artykulNode.getChildren().get(ustepIndex).getChildren().get(punktIndex));
+            Node punktNode = ustepNode.getChildren().get(punktIndex);
+
+            printNodeChildren(punktNode);
         }
     }
 
     private void printArtykulyBetween(int firstArtykulIndex, int lastArtykulIndex) {
-        for(int i = 0; i < Node.getArtykuly().size(); i++) {
+        for(int i = firstArtykulIndex; i <= lastArtykulIndex; i++) {
             Node artykulNode = Node.getArtykuly().get(i);
 
-            if(firstArtykulIndex <= i && i <= lastArtykulIndex) {
-                printNodeChildren(artykulNode);
-            }
+            printNodeChildren(artykulNode);
         }
     }
 }
