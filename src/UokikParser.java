@@ -6,8 +6,7 @@ public class UokikParser extends AbstractParser {
     }
 
     public Node parseToTree(Node root) {
-        ArrayList<Node> arrayListStack = new ArrayList<>();
-        arrayListStack.add(root);
+        this.stack.add(root);
 
         for (String line : storedFile) {
             boolean lineIsDzial = line.matches(UokikPattern.DZIAL);
@@ -38,7 +37,7 @@ public class UokikParser extends AbstractParser {
             }
 
             Node newNode = new Node(depth, line);
-            addNodeToTreeOrStack(arrayListStack, newNode);
+            addNodeToTreeOrStack(newNode);
         }
 
         return root;

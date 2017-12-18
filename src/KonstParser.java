@@ -6,8 +6,7 @@ public class KonstParser extends AbstractParser{
     }
 
     public Node parseToTree(Node root) {
-        ArrayList<Node> arrayListStack = new ArrayList<>();
-        arrayListStack.add(root);
+        this.stack.add(root);
 
         for (String line : storedFile) {
             boolean lineIsRodzial = line.matches(KonstPattern.ROZDZIAL);
@@ -34,7 +33,7 @@ public class KonstParser extends AbstractParser{
             }
 
             Node newNode = new Node(depth, line);
-            addNodeToTreeOrStack(arrayListStack, newNode);
+            addNodeToTreeOrStack(newNode);
         }
 
         return root;

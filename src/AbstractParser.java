@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 abstract public class AbstractParser {
     protected ArrayList<String> storedFile;
+    protected ArrayList<Node> stack = new ArrayList<>();
 
     public AbstractParser(ArrayList<String> storedFile) {
         this.storedFile = storedFile;
@@ -9,16 +10,16 @@ abstract public class AbstractParser {
 
     public abstract Node parseToTree(Node root);
 
-    protected void addNodeToTreeOrStack(ArrayList<Node> arrayListStack, Node newNode) {
-        Node lastNodeOnStack = arrayListStack.get(arrayListStack.size() - 1);
+    protected void addNodeToTreeOrStack(Node newNode) {
+        Node lastNodeOnStack = this.stack.get(this.stack.size() - 1);
 
         if (lastNodeOnStack.getDepth() < newNode.getDepth()) {
             addNodeToTree(lastNodeOnStack, newNode);
 
-            arrayListStack.add(newNode);
+            this.stack.add(newNode);
         } else if (lastNodeOnStack.getDepth() == newNode.getDepth()) {
-            for (int i = arrayListStack.size() - 1; i >= 0; i--) {
-                Node currentNode = arrayListStack.get(i);
+            for (int i = this.stack.size() - 1; i >= 0; i--) {
+                Node currentNode = this.stack.get(i);
 
                 if (currentNode.getDepth() < newNode.getDepth()) {
                     addNodeToTree(currentNode, newNode);
@@ -26,20 +27,20 @@ abstract public class AbstractParser {
                 }
             }
 
-            arrayListStack.add(newNode);
+            this.stack.add(newNode);
         } else {
-            for (int i = arrayListStack.size() - 1; i >= 0; i--) {
-                Node currentNode = arrayListStack.get(i);
+            for (int i = this.stack.size() - 1; i >= 0; i--) {
+                Node currentNode = this.stack.get(i);
 
                 if (currentNode.getDepth() < newNode.getDepth()) {
                     addNodeToTree(currentNode, newNode);
                     break;
                 } else {
-                    arrayListStack.remove(i);
+                    this.stack.remove(i);
                 }
             }
 
-            arrayListStack.add(newNode);
+            this.stack.add(newNode);
         }
     }
 
