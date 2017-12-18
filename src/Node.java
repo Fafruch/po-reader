@@ -6,39 +6,23 @@ public class Node {
     private List<Node> children = new ArrayList<>();
     private int depth;
     private String data;
-    private Node parent = null;
 
     public Node(int depth, String data) {
         this.depth = depth;
         this.data = data;
     }
 
-    public Node(int depth, String data, Node parent) {
-        this.depth = depth;
-        this.data = data;
-        this.parent = parent;
-    }
-
-    public List<Node> getChildren() {
-        return children;
-    }
-
-    public void setParent(Node parent) {
-        this.parent = parent;
+    static public ArrayList<Node> getArtykuly() {
+        return artykuly;
     }
 
     public void addChild(Node child) {
         this.children.add(child);
     }
 
-    public boolean isLeaf() {
-        return this.children.size() == 0;
+    public List<Node> getChildren() {
+        return children;
     }
-
-    public boolean isRoot() {
-        return (this.parent == null);
-    }
-
 
     public int getDepth() {
         return this.depth;
@@ -46,9 +30,5 @@ public class Node {
 
     public String getData() {
         return this.data;
-    }
-
-    static public ArrayList<Node> getArtykuly() {
-        return artykuly;
     }
 }

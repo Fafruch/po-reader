@@ -43,7 +43,7 @@ public class Main {
     }
 
     static private void runAppWith(String args[], ArrayList<String> storedFile) throws NotFoundException, IllegalArgumentException {
-        Node emptyDataTree = new Node(0, "", null);
+        Node emptyDataTree = new Node(0, "");
         String filename = args[0];
 
         if (filename.equals("konstytucja.txt")) {
