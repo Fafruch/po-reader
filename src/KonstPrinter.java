@@ -5,11 +5,11 @@ public class KonstPrinter extends AbstractPrinter {
 
     protected void printElements() throws NotFoundException, IllegalArgumentException{
         KonstNormalizer konstNormalizer = new KonstNormalizer();
-        args[2] = konstNormalizer.normalizeString(args[2]);
+        config = konstNormalizer.normalizeString(config);
 
         // np. Rozdział 3
-        if(args[2].matches("^rozdzia[łl]\\d+$")) {
-            String rozdzial = args[2].substring(8);
+        if(config.matches("^rozdzia[łl]\\d+$")) {
+            String rozdzial = config.substring(8);
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
 
             if(rozdzialIndex < 0 || rozdzialIndex >= root.getChildren().size()) {
@@ -21,10 +21,10 @@ public class KonstPrinter extends AbstractPrinter {
             printNodeChildren(rozdzialNode);
 
             // np. Rozdział 3, dział 2
-        } else if(args[2].matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
-            int indexOfComma = args[2].indexOf(',');
-            String rozdzial = args[2].substring(8, indexOfComma);
-            String dzial = args[2].substring(indexOfComma + 6);
+        } else if(config.matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
+            int indexOfComma = config.indexOf(',');
+            String rozdzial = config.substring(8, indexOfComma);
+            String dzial = config.substring(indexOfComma + 6);
 
             int rozdzialIndex = Integer.parseInt(rozdzial) - 1;
             int dzialIndex = Integer.parseInt(dzial) - 1;
@@ -44,8 +44,8 @@ public class KonstPrinter extends AbstractPrinter {
             printNodeChildren(dzialNode);
 
             // np. Art. 13
-        } else if(args[2].matches("^art.\\d+$")) {
-            String artykul = args[2].substring(4);
+        } else if(config.matches("^art.\\d+$")) {
+            String artykul = config.substring(4);
             int artykulIndex = Integer.parseInt(artykul) - 1;
 
             if(artykulIndex < 0 || artykulIndex > Node.getArtykuly().size() - 1) {
@@ -55,11 +55,11 @@ public class KonstPrinter extends AbstractPrinter {
             printArtykulyBetween(artykulIndex, artykulIndex);
 
             // np. Art. 13-17
-        } else if(args[2].matches("^art.\\d+-\\d+$")) {
-            int indexOfDash = args[2].indexOf('-');
+        } else if(config.matches("^art.\\d+-\\d+$")) {
+            int indexOfDash = config.indexOf('-');
 
-            String firstArtykul = args[2].substring(4, indexOfDash);
-            String lastArtykul = args[2].substring(indexOfDash + 1);
+            String firstArtykul = config.substring(4, indexOfDash);
+            String lastArtykul = config.substring(indexOfDash + 1);
 
             int firstArtykulIndex = Integer.parseInt(firstArtykul) - 1;
             int lastArtykulIndex = Integer.parseInt(lastArtykul) - 1;
@@ -76,11 +76,11 @@ public class KonstPrinter extends AbstractPrinter {
             printArtykulyBetween(firstArtykulIndex, lastArtykulIndex);
 
             // np. Art. 13, ust. 4
-        } else if(args[2].matches("^art.\\d+,ust.\\d+$")) {
-            int indexOfComma = args[2].indexOf(',');
+        } else if(config.matches("^art.\\d+,ust.\\d+$")) {
+            int indexOfComma = config.indexOf(',');
 
-            String artykul = args[2].substring(4, indexOfComma);
-            String ustep = args[2].substring(indexOfComma + 5);
+            String artykul = config.substring(4, indexOfComma);
+            String ustep = config.substring(indexOfComma + 5);
 
             int artykulIndex = Integer.parseInt(artykul) - 1;
             int ustepIndex = Integer.parseInt(ustep) - 1;
@@ -100,14 +100,14 @@ public class KonstPrinter extends AbstractPrinter {
             printNodeChildren(ustepNode);
 
             // np. Art. 13-17, ust. 4, pkt 2)
-        } else if(args[2].matches("^art.\\d+,ust.\\d+,pkt\\d+\\)$")) {
-            int firstIndexOfComma = args[2].indexOf(',');
-            int lastIndexOfComma = args[2].lastIndexOf(',');
-            int indexOfParenthesis = args[2].lastIndexOf(')');
+        } else if(config.matches("^art.\\d+,ust.\\d+,pkt\\d+\\)$")) {
+            int firstIndexOfComma = config.indexOf(',');
+            int lastIndexOfComma = config.lastIndexOf(',');
+            int indexOfParenthesis = config.lastIndexOf(')');
 
-            String artykul = args[2].substring(4, firstIndexOfComma);
-            String ustep = args[2].substring(firstIndexOfComma + 5, lastIndexOfComma);
-            String punkt = args[2].substring(lastIndexOfComma + 4, indexOfParenthesis);
+            String artykul = config.substring(4, firstIndexOfComma);
+            String ustep = config.substring(firstIndexOfComma + 5, lastIndexOfComma);
+            String punkt = config.substring(lastIndexOfComma + 4, indexOfParenthesis);
 
             int artykulIndex = Integer.parseInt(artykul) - 1;
             int ustepIndex = Integer.parseInt(ustep) - 1;

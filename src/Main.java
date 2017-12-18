@@ -26,8 +26,10 @@ public class Main {
             throw new IllegalArgumentException("You passed too few arguments!");
         } else if (args.length < 3 && args[1].equals("-e")) {
             throw new IllegalArgumentException("You passed too few arguments for -e option!");
-        } else if (!(args[0].equals("konstytucja.txt") || args[0].equals("uokik.txt"))) {
+        } else if (!args[0].equals("konstytucja.txt") && !args[0].equals("uokik.txt")) {
             throw new IllegalArgumentException("I'm not build for this file. Sorry. : (");
+        } else if (!args[1].equals("-t") && !args[1].equals("-e")) {
+            throw new IllegalArgumentException("You've provided not a valid mode. Use '-t' for table of contents or '-e' for particular element.");
         }
     }
 

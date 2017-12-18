@@ -1,19 +1,20 @@
 abstract public class AbstractPrinter {
-    protected String[] args;
+    protected String mode;
+    protected String config;
     protected Node root;
 
     public AbstractPrinter(String[] args) {
-        this.args = args;
+        this.mode = args[1];
+        this.config = args[2];
     }
 
     public void print(Node root) throws NotFoundException, IllegalArgumentException{
         this.root = root;
-        if(this.args[1].equals("-t")) {
+
+        if(mode.equals("-t")) {
             printTableOfContents(root, 0);
-        } else if (this.args[1].equals("-e")) {
-            printElements();
         } else {
-            throw new IllegalArgumentException("You've provided not a valid mode. Use '-t' for table of contents or '-e' for particular element.");
+            printElements();
         }
     }
 

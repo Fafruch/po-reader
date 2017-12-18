@@ -5,12 +5,12 @@ public class UokikPrinter extends AbstractPrinter {
 
     protected void printElements() throws NotFoundException, IllegalArgumentException {
         KonstNormalizer konstNormalizer = new KonstNormalizer();
-        args[2] = konstNormalizer.normalizeString(args[2]);
+        config = konstNormalizer.normalizeString(config);
 
         // np. Dział IIIA
-        if(args[2].matches("^dzia[łl]\\w{1,4}$")) {
-            int indexOfComma = args[2].indexOf(',');
-            String dzial = args[2].substring(0, indexOfComma);
+        if(config.matches("^dzia[łl]\\w{1,4}$")) {
+            int indexOfComma = config.indexOf(',');
+            String dzial = config.substring(0, indexOfComma);
 
             Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
@@ -21,10 +21,10 @@ public class UokikPrinter extends AbstractPrinter {
             printNodeChildren(dzialNode);
 
             // np. Dział IIIA, rozdział 2
-        } else if(args[2].matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
-            int indexOfComma = args[2].indexOf(',');
-            String dzial = args[2].substring(0, indexOfComma);
-            String rozdzial = args[2].substring(indexOfComma + 1);
+        } else if(config.matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
+            int indexOfComma = config.indexOf(',');
+            String dzial = config.substring(0, indexOfComma);
+            String rozdzial = config.substring(indexOfComma + 1);
 
             Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
@@ -41,8 +41,8 @@ public class UokikPrinter extends AbstractPrinter {
             printNodeChildren(rozdzialNode);
 
             // np. Art. 119j
-        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?$")) {
-            String artykul = args[2];
+        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?$")) {
+            String artykul = config;
 
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -53,11 +53,11 @@ public class UokikPrinter extends AbstractPrinter {
             printNodeChildren(artykulNode);
 
             // np. Art. 119j-121b
-        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
-            int indexOfDash = args[2].indexOf('-');
+        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
+            int indexOfDash = config.indexOf('-');
 
-            String firstArtykul = args[2].substring(0, indexOfDash);
-            String lastArtykul = "art." + args[2].substring(indexOfDash + 1);
+            String firstArtykul = config.substring(0, indexOfDash);
+            String lastArtykul = "art." + config.substring(indexOfDash + 1);
 
             /*System.out.println(firstArtykul);
             System.out.println(lastArtykul);*/
@@ -69,11 +69,11 @@ public class UokikPrinter extends AbstractPrinter {
             printArtykulyBetween(firstArtykul, lastArtykul);
 
             // np. Art. 30a, ust. 2a.
-        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.$")) {
-            int indexOfComma = args[2].indexOf(',');
+        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.$")) {
+            int indexOfComma = config.indexOf(',');
 
-            String artykul = args[2].substring(0, indexOfComma);
-            String ustep = args[2].substring(indexOfComma + 5);
+            String artykul = config.substring(0, indexOfComma);
+            String ustep = config.substring(indexOfComma + 5);
 
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -90,14 +90,14 @@ public class UokikPrinter extends AbstractPrinter {
             printNodeChildren(ustepNode);
 
             // np. Art. 30a, ust. 2a., pkt 1a)
-        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\)$")) {
-            int firstIndexOfComma = args[2].indexOf(',');
-            int lastIndexOfComma = args[2].lastIndexOf(',');
-            int indexOfParenthesis = args[2].lastIndexOf(')');
+        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\)$")) {
+            int firstIndexOfComma = config.indexOf(',');
+            int lastIndexOfComma = config.lastIndexOf(',');
+            int indexOfParenthesis = config.lastIndexOf(')');
 
-            String artykul = args[2].substring(0, firstIndexOfComma);
-            String ustep = args[2].substring(firstIndexOfComma + 5, lastIndexOfComma);
-            String punkt = args[2].substring(lastIndexOfComma + 4, indexOfParenthesis);
+            String artykul = config.substring(0, firstIndexOfComma);
+            String ustep = config.substring(firstIndexOfComma + 5, lastIndexOfComma);
+            String punkt = config.substring(lastIndexOfComma + 4, indexOfParenthesis);
 
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -120,16 +120,16 @@ public class UokikPrinter extends AbstractPrinter {
             printNodeChildren(punktNode);
 
             // np. Art. 30a, ust. 2a., pkt 1a), lit. b)
-        } else if(args[2].matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\),lit.[a-z]{1,3}\\)$")) {
-            int firstIndexOfComma = args[2].indexOf(',');
-            int secondIndexOfComma = firstIndexOfComma + args[2].substring(firstIndexOfComma + 1).indexOf(',');
-            int firstIndexOfParenthesis = args[2].indexOf(')');
-            int lastIndexOfParenthesis = args[2].lastIndexOf(')');
+        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\),lit.[a-z]{1,3}\\)$")) {
+            int firstIndexOfComma = config.indexOf(',');
+            int secondIndexOfComma = firstIndexOfComma + config.substring(firstIndexOfComma + 1).indexOf(',');
+            int firstIndexOfParenthesis = config.indexOf(')');
+            int lastIndexOfParenthesis = config.lastIndexOf(')');
 
-            String artykul = args[2].substring(0, firstIndexOfComma);
-            String ustep = args[2].substring(firstIndexOfComma + 5, secondIndexOfComma);
-            String punkt = args[2].substring(secondIndexOfComma + 5, firstIndexOfParenthesis);
-            String litera = args[2].substring(firstIndexOfParenthesis + 6, lastIndexOfParenthesis);
+            String artykul = config.substring(0, firstIndexOfComma);
+            String ustep = config.substring(firstIndexOfComma + 5, secondIndexOfComma);
+            String punkt = config.substring(secondIndexOfComma + 5, firstIndexOfParenthesis);
+            String litera = config.substring(firstIndexOfParenthesis + 6, lastIndexOfParenthesis);
 
             Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -196,6 +196,8 @@ public class UokikPrinter extends AbstractPrinter {
 
             UokikNormalizer uokikNormalizer = new UokikNormalizer();
             String normalizedData = uokikNormalizer.normalizeString(data);
+
+            // System.out.println(normalizedData);
 
             if(normalizedData.matches(name + "(.)*$")) {
                 return root;
