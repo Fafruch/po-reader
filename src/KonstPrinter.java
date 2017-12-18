@@ -18,7 +18,7 @@ public class KonstPrinter extends AbstractPrinter {
 
             Node rozdzialNode = root.getChildren().get(rozdzialIndex);
 
-            printNodeChildren(rozdzialNode);
+            printNodeAndItsChildren(rozdzialNode);
 
             // np. Rozdział 3, dział 2
         } else if(config.matches("^rozdzia[łl]\\d+,dzia[łl]\\d+$")) {
@@ -41,7 +41,7 @@ public class KonstPrinter extends AbstractPrinter {
 
             Node dzialNode = rozdzialNode.getChildren().get(dzialIndex);
 
-            printNodeChildren(dzialNode);
+            printNodeAndItsChildren(dzialNode);
 
             // np. Art. 13
         } else if(config.matches("^art.\\d+$")) {
@@ -97,7 +97,7 @@ public class KonstPrinter extends AbstractPrinter {
 
             Node ustepNode = artykulNode.getChildren().get(ustepIndex);
 
-            printNodeChildren(ustepNode);
+            printNodeAndItsChildren(ustepNode);
 
             // np. Art. 13-17, ust. 4, pkt 2)
         } else if(config.matches("^art.\\d+,ust.\\d+,pkt\\d+\\)$")) {
@@ -131,7 +131,7 @@ public class KonstPrinter extends AbstractPrinter {
 
             Node punktNode = ustepNode.getChildren().get(punktIndex);
 
-            printNodeChildren(punktNode);
+            printNodeAndItsChildren(punktNode);
         }
     }
 
@@ -139,7 +139,7 @@ public class KonstPrinter extends AbstractPrinter {
         for(int i = firstArtykulIndex; i <= lastArtykulIndex; i++) {
             Node artykulNode = Node.getArtykuly().get(i);
 
-            printNodeChildren(artykulNode);
+            printNodeAndItsChildren(artykulNode);
         }
     }
 }

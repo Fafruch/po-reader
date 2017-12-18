@@ -41,7 +41,7 @@ abstract public class AbstractPrinter {
         }
     }
 
-    protected void printNodeChildren(Node node) {
+    protected void printNodeAndItsChildren(Node node) {
         for(int i = 1; i < node.getDepth(); i++) {
             System.out.print("  ");
         }
@@ -51,7 +51,7 @@ abstract public class AbstractPrinter {
         for(int i = 0; i < node.getChildren().size(); i++) {
             Node childrenNode = node.getChildren().get(i);
 
-            printNodeChildren(childrenNode);
+            printNodeAndItsChildren(childrenNode);
         }
     }
 

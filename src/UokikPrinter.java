@@ -18,7 +18,7 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new NotFoundException("Nie ma takiego dzialu!");
             }
 
-            printNodeChildren(dzialNode);
+            printNodeAndItsChildren(dzialNode);
 
             // np. Dział IIIA, rozdział 2
         } else if(config.matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
@@ -38,7 +38,7 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new NotFoundException("Nie ma takiego rozdzialu!");
             }
 
-            printNodeChildren(rozdzialNode);
+            printNodeAndItsChildren(rozdzialNode);
 
             // np. Art. 119j
         } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?$")) {
@@ -50,7 +50,7 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new NotFoundException("Nie ma takiego artykulu!");
             }
 
-            printNodeChildren(artykulNode);
+            printNodeAndItsChildren(artykulNode);
 
             // np. Art. 119j-121b
         } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
@@ -87,7 +87,7 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new NotFoundException("Nie znaleziono takiego ustepu!");
             }
 
-            printNodeChildren(ustepNode);
+            printNodeAndItsChildren(ustepNode);
 
             // np. Art. 30a, ust. 2a., pkt 1a)
         } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\)$")) {
@@ -117,7 +117,7 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new NotFoundException("Nie znaleziono takiego punktu!");
             }
 
-            printNodeChildren(punktNode);
+            printNodeAndItsChildren(punktNode);
 
             // np. Art. 30a, ust. 2a., pkt 1a), lit. b)
         } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\),lit.[a-z]{1,3}\\)$")) {
@@ -155,7 +155,7 @@ public class UokikPrinter extends AbstractPrinter {
                 throw new NotFoundException("Nie znaleziono takiej litery!");
             }
 
-            printNodeChildren(literaNode);
+            printNodeAndItsChildren(literaNode);
         }
     }
 
@@ -170,7 +170,6 @@ public class UokikPrinter extends AbstractPrinter {
             normalizedData = uokikNormalizer.normalizeString(data);
             normalizedData = uokikNormalizer.removeLastChar(normalizedData);
 
-            /* test */
             /*System.out.println("");
             System.out.println("1. " + firstArtykulName + ", length: " + firstArtykulName.length());
             System.out.println("2. " + (firstArtykulName.compareTo(normalizedData) <= 0));
@@ -178,14 +177,13 @@ public class UokikPrinter extends AbstractPrinter {
             System.out.println("4. " + (normalizedData.compareTo(lastArtykulName) <= 0));
             System.out.println("5. " + lastArtykulName + ", length: " + lastArtykulName.length());
             System.out.println("");*/
-            /* end_test */
 
             if(firstArtykulName.compareTo(normalizedData) <= 0
                     && normalizedData.compareTo(lastArtykulName) <= 0
                     && normalizedData.length() >= firstArtykulName.length()
                     && normalizedData.length() >= lastArtykulName.length()) {
 
-                printNodeChildren(currentNode);
+                printNodeAndItsChildren(currentNode);
             }
         }
     }
