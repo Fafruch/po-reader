@@ -1,7 +1,7 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class KonstParser extends AbstractParser{
-    public KonstParser(ArrayList<String> storedFile) {
+    public KonstParser(LinkedList<String> storedFile) {
         super(storedFile);
     }
 

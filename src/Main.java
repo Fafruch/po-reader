@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,7 +10,7 @@ public class Main {
 
             checkArgs(args);
 
-            ArrayList<String> file = convertFileToArrayList(br);
+            LinkedList<String> file = convertFileToLinkedList(br);
 
             runAppWith(args, file);
 
@@ -33,8 +33,8 @@ public class Main {
         }
     }
 
-    static private ArrayList<String> convertFileToArrayList(BufferedReader br) throws IOException {
-        ArrayList<String> storedFile = new ArrayList<>();
+    static private LinkedList<String> convertFileToLinkedList(BufferedReader br) throws IOException {
+        LinkedList<String> storedFile = new LinkedList<>();
         String line;
 
         while ((line = br.readLine()) != null) {
@@ -44,7 +44,7 @@ public class Main {
         return storedFile;
     }
 
-    static private void runAppWith(String args[], ArrayList<String> storedFile) throws NotFoundException, IllegalArgumentException {
+    static private void runAppWith(String args[], LinkedList<String> storedFile) throws NotFoundException, IllegalArgumentException {
         Node emptyDataTree = new Node(0, "");
         String filename = args[0];
 

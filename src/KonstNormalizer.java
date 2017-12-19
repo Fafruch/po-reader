@@ -1,8 +1,8 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class KonstNormalizer {
-    public ArrayList<String> cleanFile(ArrayList<String> file) {
-        ArrayList<String> cleanedFile = new ArrayList<>();
+    public LinkedList<String> cleanFile(LinkedList<String> file) {
+        LinkedList<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
 
         for(String line : file) {
@@ -28,8 +28,8 @@ public class KonstNormalizer {
         return cleanedFile;
     }
 
-    public ArrayList<String> connectLines(ArrayList<String> file) {
-        ArrayList<String> fileWithConnctedLines = new ArrayList<>();
+    public LinkedList<String> connectLines(LinkedList<String> file) {
+        LinkedList<String> fileWithConnctedLines = new LinkedList<>();
 
         for(int i = 0; i < file.size()-1; i++) {
 

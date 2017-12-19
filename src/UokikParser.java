@@ -1,7 +1,7 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class UokikParser extends AbstractParser {
-    public UokikParser(ArrayList<String> storedFile) {
+    public UokikParser(LinkedList<String> storedFile) {
         super(storedFile);
     }
 

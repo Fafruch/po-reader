@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 abstract public class AbstractParser {
-    protected ArrayList<String> storedFile;
+    protected LinkedList<String> storedFile;
     protected ArrayList<Node> stack = new ArrayList<>();
 
-    public AbstractParser(ArrayList<String> storedFile) {
+    public AbstractParser(LinkedList<String> storedFile) {
         this.storedFile = storedFile;
     }
 
