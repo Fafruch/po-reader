@@ -1,8 +1,9 @@
 import java.util.LinkedList;
+import java.util.List;
 
 public class UokikNormalizer {
-    public LinkedList<String> cleanFile(LinkedList<String> file) {
-        LinkedList<String> cleanedFile = new LinkedList<>();
+    public List<String> cleanFile(List<String> file) {
+        List<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
 
         for(String line : file) {
@@ -24,8 +25,8 @@ public class UokikNormalizer {
         return cleanedFile;
     }
 
-    public LinkedList<String> connectLines(LinkedList<String> file) {
-        LinkedList<String> fileWithConnctedLines = new LinkedList<>();
+    public List<String> connectLines(List<String> file) {
+        List<String> fileWithConnctedLines = new LinkedList<>();
 
         for(int i = 0; i < file.size()-1; i++) {
 
@@ -85,8 +86,8 @@ public class UokikNormalizer {
         return fileWithConnctedLines;
     }
 
-    public LinkedList<String> moveUstepsToNewLine(LinkedList<String> file) {
-        LinkedList<String> fileWithMovedLines = new LinkedList<>();
+    public List<String> moveUstepsToNewLine(List<String> file) {
+        List<String> fileWithMovedLines = new LinkedList<>();
 
         for(int i = 0; i < file.size(); i++) {
             String currentLine = file.get(i);
