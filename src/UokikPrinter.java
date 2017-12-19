@@ -4,56 +4,35 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     protected void printElements() throws NotFoundException, IllegalArgumentException {
-        KonstNormalizer konstNormalizer = new KonstNormalizer();
-        config = konstNormalizer.normalizeString(config);
+        UokikNormalizer uokikNormalizer = new UokikNormalizer();
+        config = uokikNormalizer.normalizeString(config);
 
-        if(config.matches("^dzia[łl]\\w{1,4}$")) {
+        if(config.matches('^' + Pattern.DZIAL + '$')) {
             // np. Dział IIIA
             printDzial();
 
-        } else if(config.matches("^dzia[łl]\\w{1,4},rozdzia[łl]\\d+$")) {
+        } else if(config.matches('^' + Pattern.DZIAL + ',' + Pattern.ROZDZIAL + '$')) {
             // np. Dział IIIA, rozdział 2
             printRozdzial();
 
-        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?$")) {
+        } else if(config.matches('^' + Pattern.ARTYKUL + '$')) {
             // np. Art. 119j
             printArtykul();
 
-        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?-\\d{1,3}[a-z]{0,3}(\\.)?$")) {
+        } else if(config.matches('^' + Pattern.ZAKRES_ARTYKULOW + '$')) {
             // np. Art. 119j-121b
             printArtykuly();
 
-        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.$")) {
+        } else if(config.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + '$')) {
             // np. Art. 30a, ust. 2a.
             printUstep();
-        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\)$")) {
+        } else if(config.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + '$')) {
             // np. Art. 30a, ust. 2a., pkt 1a)
             printPunkt();
 
-        } else if(config.matches("^art\\.\\d{1,3}[a-z]{0,3}(\\.)?,ust\\.\\d{1,3}[a-z]{0,3}\\.,pkt\\d{1,3}[a-z]{0,3}\\),lit.[a-z]{1,3}\\)$")) {
+        } else if(config.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + ',' + Pattern.LITERA + '$')) {
             // np. Art. 30a, ust. 2a., pkt 1a), lit. b)
             printLitera();
-        }
-    }
-
-    private void printArtykulyBetween(String firstArtykulName, String lastArtykulName) {
-        UokikNormalizer uokikNormalizer = new UokikNormalizer();
-        String normalizedData;
-
-        for(int i = 0; i < Node.getArtykuly().size(); i++) {
-            Node currentNode = Node.getArtykuly().get(i);
-            String data = currentNode.getData();
-
-            normalizedData = uokikNormalizer.normalizeString(data);
-            normalizedData = uokikNormalizer.removeLastChar(normalizedData);
-
-            if(firstArtykulName.compareTo(normalizedData) <= 0
-                    && normalizedData.compareTo(lastArtykulName) <= 0
-                    && normalizedData.length() >= firstArtykulName.length()
-                    && normalizedData.length() >= lastArtykulName.length()) {
-
-                printNodeAndItsChildren(currentNode);
-            }
         }
     }
 
@@ -113,7 +92,30 @@ public class UokikPrinter extends AbstractPrinter {
             throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
         }
 
-        printArtykulyBetween(firstArtykul, lastArtykul);
+        UokikNormalizer uokikNormalizer = new UokikNormalizer();
+        String normalizedData;
+        boolean wasPrinting = false;
+
+        for(int i = 0; i < Node.getArtykuly().size(); i++) {
+            Node currentNode = Node.getArtykuly().get(i);
+            String data = currentNode.getData();
+
+            normalizedData = uokikNormalizer.normalizeString(data);
+            normalizedData = uokikNormalizer.removeLastChar(normalizedData);
+
+            if(firstArtykul.compareTo(normalizedData) <= 0
+                    && normalizedData.compareTo(lastArtykul) <= 0
+                    && normalizedData.length() >= firstArtykul.length()
+                    && normalizedData.length() >= lastArtykul.length()) {
+
+                wasPrinting = true;
+                printNodeAndItsChildren(currentNode);
+            }
+        }
+
+        if(!wasPrinting) {
+            throw new NotFoundException("Nie ma takich artykulow!");
+        }
     }
 
     private void printUstep() throws NotFoundException {
