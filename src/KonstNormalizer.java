@@ -55,7 +55,7 @@ public class KonstNormalizer extends Normalizer {
                 if (currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) {
                     connectedLines = currentLine + " " + nextLine;
                 } else {
-                    // Matches KonstPattern.KONIEC_MYSLNIKIEM
+                    // matches KonstPattern.KONIEC_MYSLNIKIEM
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                     connectedLines = currentLineWithoutDash + nextLine;
                 }

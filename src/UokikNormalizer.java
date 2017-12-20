@@ -35,43 +35,40 @@ public class UokikNormalizer extends Normalizer {
             String connectedLines = null;
             boolean wasConnecting = false;
 
-            if (currentLine.matches(UokikPattern.DZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
+            if ((currentLine.matches(UokikPattern.DZIAL) || currentLine.matches(UokikPattern.ROZDZIAL))
+                    && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
                 connectedLines = currentLine + " - \"" + nextLine + "\"";
                 wasConnecting = true;
                 i++;
-            } else if (currentLine.matches(UokikPattern.ROZDZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
-                connectedLines = currentLine + " - \"" + nextLine + "\"";
+            } else while (
+                    (currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
+                    !currentLine.matches(UokikPattern.DZIAL) &&
+                    !currentLine.matches(UokikPattern.ROZDZIAL) &&
+                    !currentLine.matches(UokikPattern.ARTYKUL) &&
+                    (nextLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || nextLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
+                    !nextLine.matches(UokikPattern.DZIAL) &&
+                    !nextLine.matches(UokikPattern.ROZDZIAL) &&
+                    !nextLine.matches(UokikPattern.ARTYKUL) &&
+                    !nextLine.matches(UokikPattern.USTEP) &&
+                    !nextLine.matches(UokikPattern.PUNKT) &&
+                    !nextLine.matches(UokikPattern.LITERA)
+                    ) {
+
                 wasConnecting = true;
-                i++;
-            } else {
-                while ((currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
-                        !currentLine.matches(UokikPattern.DZIAL) &&
-                        !currentLine.matches(UokikPattern.ROZDZIAL) &&
-                        !currentLine.matches(UokikPattern.ARTYKUL) &&
-                        (nextLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || nextLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
-                        !nextLine.matches(UokikPattern.DZIAL) &&
-                        !nextLine.matches(UokikPattern.ROZDZIAL) &&
-                        !nextLine.matches(UokikPattern.ARTYKUL) &&
-                        !nextLine.matches(UokikPattern.USTEP) &&
-                        !nextLine.matches(UokikPattern.PUNKT) &&
-                        !nextLine.matches(UokikPattern.LITERA)) {
 
-                    wasConnecting = true;
-
-                    if (currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) {
-                        connectedLines = currentLine + " " + nextLine;
-                    } else {
-                        // Matches UokikPattern.KONIEC_MYSLNIKIEM
-                        String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
-                        connectedLines = currentLineWithoutDash + nextLine;
-                    }
-
-                    if (i + 1 == file.size() - 1) break;
-
-                    i++;
-                    currentLine = connectedLines;
-                    nextLine = file.get(i + 1);
+                if (currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) {
+                    connectedLines = currentLine + " " + nextLine;
+                } else {
+                    // matches UokikPattern.KONIEC_MYSLNIKIEM
+                    String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
+                    connectedLines = currentLineWithoutDash + nextLine;
                 }
+
+                if (i + 1 == file.size() - 1) break;
+
+                i++;
+                currentLine = connectedLines;
+                nextLine = file.get(i + 1);
             }
 
             if (wasConnecting) {
