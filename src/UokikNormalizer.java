@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class UokikNormalizer {
+public class UokikNormalizer extends Normalizer {
     public List<String> cleanFile(List<String> file) {
         List<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
@@ -109,12 +109,5 @@ public class UokikNormalizer {
         }
 
         return fileWithMovedLines;
-    }
-
-    public String normalizeString(String string) {
-        return string.replaceAll("\\s+|\\.|\\)","").toLowerCase();
-    }
-    public String removeLastChar(String string) {
-        return string.substring(0, string.length() - 1);
     }
 }
