@@ -52,11 +52,10 @@ public class Main {
         if (filename.equals("konstytucja.txt")) {
             // normalize file for easier tree build
             KonstNormalizer konstNormalizer = new KonstNormalizer();
-            storedFile = konstNormalizer.cleanFile(storedFile);
-            storedFile = konstNormalizer.connectLines(storedFile);
+            List<String> normalizedFile = konstNormalizer.normalize(storedFile);
 
             // convert list of lines to tree of lines
-            KonstParser konstParser = new KonstParser(storedFile);
+            KonstParser konstParser = new KonstParser(normalizedFile);
             Node dataTree = konstParser.parseToTree(emptyDataTree);
 
             // print lines based on user's input
@@ -66,12 +65,10 @@ public class Main {
         } else if (filename.equals("uokik.txt")) {
             // normalize file for easier tree build
             UokikNormalizer uokikNormalizer = new UokikNormalizer();
-            storedFile = uokikNormalizer.cleanFile(storedFile);
-            storedFile = uokikNormalizer.moveUstepsToNewLine(storedFile);
-            storedFile = uokikNormalizer.connectLines(storedFile);
+            List<String> normalizedFile = uokikNormalizer.normalize(storedFile);
 
             // convert list of lines to tree of lines
-            UokikParser uokikParser = new UokikParser(storedFile);
+            UokikParser uokikParser = new UokikParser(normalizedFile);
             Node dataTree = uokikParser.parseToTree(emptyDataTree);
 
             // print lines based on user's input

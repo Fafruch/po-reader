@@ -2,7 +2,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UokikNormalizer extends Normalizer {
-    public List<String> cleanFile(List<String> file) {
+    public List<String> normalize(List<String> file) {
+        List<String> cleanedFile = cleanFile(file);
+        List<String> fileWithMovedUsteps = moveUstepsToNewLine(cleanedFile);
+        List<String> fileWithConnectedLines = connectLines(fileWithMovedUsteps);
+
+        return fileWithConnectedLines;
+    }
+
+    private List<String> cleanFile(List<String> file) {
         List<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
 
@@ -25,7 +33,7 @@ public class UokikNormalizer extends Normalizer {
         return cleanedFile;
     }
 
-    public List<String> connectLines(List<String> file) {
+    private List<String> connectLines(List<String> file) {
         List<String> fileWithConnctedLines = new LinkedList<>();
 
         for (int i = 0; i < file.size() - 1; i++) {
@@ -69,7 +77,7 @@ public class UokikNormalizer extends Normalizer {
         return fileWithConnctedLines;
     }
 
-    public List<String> moveUstepsToNewLine(List<String> file) {
+    private List<String> moveUstepsToNewLine(List<String> file) {
         List<String> fileWithMovedLines = new LinkedList<>();
 
         for (int i = 0; i < file.size(); i++) {

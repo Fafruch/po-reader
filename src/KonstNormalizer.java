@@ -2,7 +2,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class KonstNormalizer extends Normalizer {
-    public List<String> cleanFile(List<String> file) {
+    public List<String> normalize(List<String> file) {
+        List<String> cleanedFile = cleanFile(file);
+        List<String> fileWithConnectedLines = connectLines(cleanedFile);
+
+        return fileWithConnectedLines;
+    }
+
+    private List<String> cleanFile(List<String> file) {
         List<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
 
@@ -29,7 +36,7 @@ public class KonstNormalizer extends Normalizer {
         return cleanedFile;
     }
 
-    public List<String> connectLines(List<String> file) {
+    private List<String> connectLines(List<String> file) {
         List<String> fileWithConnctedLines = new LinkedList<>();
 
         for (int i = 0; i < file.size() - 1; i++) {
