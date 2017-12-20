@@ -48,7 +48,7 @@ abstract public class AbstractParser {
     private void addNodeToTree(Node parentNode, Node childNode) {
         parentNode.addChild(childNode);
 
-        if(childNode.getDepth() == 3) {
+        if (childNode.getDepth() == 3) {
             Node.getArtykuly().add(childNode);
         }
     }

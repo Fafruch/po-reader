@@ -62,6 +62,7 @@ public class Main {
             // print lines based on user's input
             KonstPrinter konstPrinter = new KonstPrinter(args);
             konstPrinter.print(dataTree);
+
         } else if (filename.equals("uokik.txt")) {
             // normalize file for easier tree build
             UokikNormalizer uokikNormalizer = new UokikNormalizer();

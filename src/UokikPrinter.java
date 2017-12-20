@@ -6,11 +6,11 @@ public class UokikPrinter extends AbstractPrinter {
     protected void printElements() throws NotFoundException, IllegalArgumentException {
         super.printElements();
 
-        if(normalizedConfig.matches('^' + Pattern.DZIAL + '$')) {
+        if (normalizedConfig.matches('^' + Pattern.DZIAL + '$')) {
             // np. Dział IIIA
             printDzial();
 
-        } else if(normalizedConfig.matches('^' + Pattern.DZIAL + ',' + Pattern.ROZDZIAL + '$')) {
+        } else if (normalizedConfig.matches('^' + Pattern.DZIAL + ',' + Pattern.ROZDZIAL + '$')) {
             // np. Dział IIIA, rozdział 2
             printRozdzial();
         }
@@ -21,7 +21,7 @@ public class UokikPrinter extends AbstractPrinter {
 
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
-        if(dzialNode == null) {
+        if (dzialNode == null) {
             throw new NotFoundException("Nie ma takiego dzialu!");
         }
 
@@ -37,13 +37,13 @@ public class UokikPrinter extends AbstractPrinter {
 
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
-        if(dzialNode == null) {
+        if (dzialNode == null) {
             throw new NotFoundException("Nie ma takiego dzialu!");
         }
 
         Node rozdzialNode = findNodeAtDepth(dzialNode, rozdzial, 2);
 
-        if(rozdzialNode == null) {
+        if (rozdzialNode == null) {
             throw new NotFoundException("Nie ma takiego rozdzialu!");
         }
 

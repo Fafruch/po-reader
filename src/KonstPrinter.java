@@ -6,24 +6,24 @@ public class KonstPrinter extends AbstractPrinter {
     protected void printElements() throws NotFoundException, IllegalArgumentException {
         super.printElements();
 
-        if(normalizedConfig.matches("^"+ Pattern.ROZDZIAL + "$")) {
+        if (normalizedConfig.matches("^" + Pattern.ROZDZIAL + "$")) {
             // np. Rozdział II
             printRozdzial();
 
-        } else if(normalizedConfig.matches("^"+ Pattern.ROZDZIAL + ',' + Pattern.DZIAL + "$")) {
+        } else if (normalizedConfig.matches("^" + Pattern.ROZDZIAL + ',' + Pattern.DZIAL + "$")) {
             // np. Rozdział 3, dział 2
             printDzial();
         }
     }
 
-    private void printRozdzial() throws  NotFoundException {
+    private void printRozdzial() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
         String rozdzial = configSplit[0];
 
         Node rozdzialNode = findNodeAtDepth(root, rozdzial, 1);
 
-        if(rozdzialNode == null) {
+        if (rozdzialNode == null) {
             throw new NotFoundException("Nie ma takiego rozdzialu!");
         }
 
@@ -31,7 +31,7 @@ public class KonstPrinter extends AbstractPrinter {
         wasPrinting = true;
     }
 
-    private void printDzial() throws  NotFoundException {
+    private void printDzial() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
         String rozdzial = configSplit[0];
@@ -39,11 +39,11 @@ public class KonstPrinter extends AbstractPrinter {
 
         Node rozdzialNode = findNodeAtDepth(root, rozdzial, 1);
 
-        if(rozdzialNode == null) {
+        if (rozdzialNode == null) {
             throw new NotFoundException("Nie ma takiego rozdzialu!");
         }
 
-        if(dzialIndex < 0 || dzialIndex >= rozdzialNode.getChildren().size()) {
+        if (dzialIndex < 0 || dzialIndex >= rozdzialNode.getChildren().size()) {
             throw new NotFoundException("Nie ma takiego dzialu!");
         }
 

@@ -8,7 +8,7 @@ abstract public class AbstractPrinter {
     public AbstractPrinter(String[] args) {
         this.mode = args[1];
 
-        if(args.length == 3) {
+        if (args.length == 3) {
             this.config = args[2];
         }
     }
@@ -16,25 +16,25 @@ abstract public class AbstractPrinter {
     public void print(Node root) throws NotFoundException, IllegalArgumentException {
         this.root = root;
 
-        if(mode.equals("-t")) {
+        if (mode.equals("-t")) {
             printTableOfContents(root, 0);
         } else {
             printElements();
 
-            if(!wasPrinting) {
+            if (!wasPrinting) {
                 throw new IllegalArgumentException("Bad input format for elements configuration! Config '" + config + "' is not valid.");
             }
         }
     }
 
     protected void printNodeAndItsChildren(Node node) {
-        for(int i = 1; i < node.getDepth(); i++) {
+        for (int i = 1; i < node.getDepth(); i++) {
             System.out.print("  ");
         }
 
         System.out.println(node.getData());
 
-        for(int i = 0; i < node.getChildren().size(); i++) {
+        for (int i = 0; i < node.getChildren().size(); i++) {
             Node childrenNode = node.getChildren().get(i);
 
             printNodeAndItsChildren(childrenNode);
@@ -42,28 +42,28 @@ abstract public class AbstractPrinter {
     }
 
     protected Node findNodeAtDepth(Node root, String name, int depth) {
-        if(root.getDepth() == depth) {
+        if (root.getDepth() == depth) {
             String data = root.getData();
 
             Normalizer normalizer = new Normalizer();
             String normalizedData = normalizer.normalizeString(data);
 
             // keep only the chars that we want to check equality of
-            if(normalizedData.length() > name.length()) {
+            if (normalizedData.length() > name.length()) {
                 normalizedData = normalizedData.substring(0, name.length());
             }
 
-            if(normalizedData.matches(name)) {
+            if (normalizedData.matches(name)) {
                 return root;
             } else {
                 return null;
             }
         }
 
-        for(Node child : root.getChildren()) {
+        for (Node child : root.getChildren()) {
             Node result = findNodeAtDepth(child, name, depth);
 
-            if(result != null) {
+            if (result != null) {
                 return result;
             }
         }
@@ -101,7 +101,7 @@ abstract public class AbstractPrinter {
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
-        if(artykulNode == null) {
+        if (artykulNode == null) {
             throw new NotFoundException("Nie ma takiego artykulu!");
         }
 
@@ -115,7 +115,7 @@ abstract public class AbstractPrinter {
         String firstArtykul = configSplit[0]; // np. art133
         String lastArtykul = "art" + configSplit[1]; // np. art245
 
-        if(firstArtykul.compareTo(lastArtykul) > 0) {
+        if (firstArtykul.compareTo(lastArtykul) > 0) {
             throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
         }
 
@@ -123,26 +123,26 @@ abstract public class AbstractPrinter {
         String normalizedData;
         boolean foundArticles = false;
 
-        for(int i = 0; i < Node.getArtykuly().size(); i++) {
+        for (int i = 0; i < Node.getArtykuly().size(); i++) {
             Node currentNode = Node.getArtykuly().get(i);
             String data = currentNode.getData();
             normalizedData = normalizer.normalizeString(data);
 
             // extract only numerical values from data
-            int firstArtykulIndex = Integer.parseInt(firstArtykul.replaceAll("[a-zA-Z]",""));
-            int currentArtykulIndex = Integer.parseInt(normalizedData.replaceAll("[a-zA-Z]",""));
-            int lastArtykulIndex = Integer.parseInt(lastArtykul.replaceAll("[a-zA-Z]",""));
+            int firstArtykulIndex = Integer.parseInt(firstArtykul.replaceAll("[a-zA-Z]", ""));
+            int currentArtykulIndex = Integer.parseInt(normalizedData.replaceAll("[a-zA-Z]", ""));
+            int lastArtykulIndex = Integer.parseInt(lastArtykul.replaceAll("[a-zA-Z]", ""));
 
             boolean isNumericalBetween = firstArtykulIndex <= currentArtykulIndex && currentArtykulIndex <= lastArtykulIndex;
             boolean isAlphabeticalBetween = firstArtykul.compareTo(normalizedData) <= 0 && normalizedData.compareTo(lastArtykul) <= 0;
 
-            if(isNumericalBetween && isAlphabeticalBetween) {
+            if (isNumericalBetween && isAlphabeticalBetween) {
                 printNodeAndItsChildren(currentNode);
                 foundArticles = true;
             }
         }
 
-        if(!foundArticles) {
+        if (!foundArticles) {
             throw new NotFoundException("Nie ma takich artykulow!");
         }
 
@@ -157,13 +157,13 @@ abstract public class AbstractPrinter {
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
-        if(artykulNode == null) {
+        if (artykulNode == null) {
             throw new NotFoundException("Nie znaleziono takiego artykulu!");
         }
 
         Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
-        if(ustepNode == null) {
+        if (ustepNode == null) {
             throw new NotFoundException("Nie znaleziono takiego ustepu!");
         }
 
@@ -180,19 +180,19 @@ abstract public class AbstractPrinter {
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
-        if(artykulNode == null) {
+        if (artykulNode == null) {
             throw new NotFoundException("Nie znaleziono takiego artykulu!");
         }
 
         Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
-        if(ustepNode == null) {
+        if (ustepNode == null) {
             throw new NotFoundException("Nie znaleziono takiego ustepu!");
         }
 
         Node punktNode = findNodeAtDepth(ustepNode, punkt, 5);
 
-        if(punktNode == null) {
+        if (punktNode == null) {
             throw new NotFoundException("Nie znaleziono takiego punktu!");
         }
 
@@ -237,11 +237,11 @@ abstract public class AbstractPrinter {
     }
 
     private void printTableOfContents(Node node, int index) {
-        for(int i = 1; i < node.getDepth(); i++) {
+        for (int i = 1; i < node.getDepth(); i++) {
             System.out.print("  ");
         }
 
-        if(node.getDepth() == 4) {
+        if (node.getDepth() == 4) {
             System.out.println("Ustep " + (index + 1) + ".");
         } else if (node.getDepth() == 5) {
             System.out.println("Punkt " + (index + 1) + ")");
@@ -252,7 +252,7 @@ abstract public class AbstractPrinter {
             System.out.println(node.getData());
         }
 
-        for(int i = 0; i < node.getChildren().size(); i++) {
+        for (int i = 0; i < node.getChildren().size(); i++) {
             Node childrenNode = node.getChildren().get(i);
 
             printTableOfContents(childrenNode, i);

@@ -6,20 +6,20 @@ public class KonstNormalizer extends Normalizer {
         List<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
 
-        for(String line : file) {
-            if(line.matches(KonstPattern.ROZDZIAL)) {
+        for (String line : file) {
+            if (line.matches(KonstPattern.ROZDZIAL)) {
                 contentStarted = true;
             }
 
-            if(line.equals("©Kancelaria Sejmu") || line.equals("2009-11-16")) {
+            if (line.equals("©Kancelaria Sejmu") || line.equals("2009-11-16")) {
                 continue;
             }
 
-            if(line.length() == 1) {
+            if (line.length() == 1) {
                 continue;
             }
 
-            if(!contentStarted) {
+            if (!contentStarted) {
                 continue;
             }
 
@@ -32,14 +32,14 @@ public class KonstNormalizer extends Normalizer {
     public List<String> connectLines(List<String> file) {
         List<String> fileWithConnctedLines = new LinkedList<>();
 
-        for(int i = 0; i < file.size()-1; i++) {
+        for (int i = 0; i < file.size() - 1; i++) {
 
             String currentLine = file.get(i);
-            String nextLine = file.get(i+1);
+            String nextLine = file.get(i + 1);
             String connectedLines = null;
             boolean wasConnecting = false;
 
-            while((currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
+            while ((currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
                     !currentLine.matches(KonstPattern.DZIAL) &&
                     !currentLine.matches(KonstPattern.ROZDZIAL) &&
                     !currentLine.matches(KonstPattern.ARTYKUL) &&
@@ -52,29 +52,29 @@ public class KonstNormalizer extends Normalizer {
 
                 wasConnecting = true;
 
-                if(currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) {
+                if (currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) {
                     connectedLines = currentLine + " " + nextLine;
                 } else {
                     // Matches KonstPattern.KONIEC_MYSLNIKIEM
-                    String currentLineWithoutDash = currentLine.substring(0, currentLine.length()-1);
+                    String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                     connectedLines = currentLineWithoutDash + nextLine;
                 }
 
-                if(i+1 == file.size()-1) break;
+                if (i + 1 == file.size() - 1) break;
 
                 i++;
                 currentLine = connectedLines;
-                nextLine = file.get(i+1);
+                nextLine = file.get(i + 1);
             }
 
-            if(wasConnecting) {
+            if (wasConnecting) {
                 fileWithConnctedLines.add(connectedLines);
             } else {
                 fileWithConnctedLines.add(currentLine);
             }
         }
 
-        fileWithConnctedLines.add(file.get(file.size()-1));
+        fileWithConnctedLines.add(file.get(file.size() - 1));
 
         return fileWithConnctedLines;
     }

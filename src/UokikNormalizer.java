@@ -6,16 +6,16 @@ public class UokikNormalizer extends Normalizer {
         List<String> cleanedFile = new LinkedList<>();
         boolean contentStarted = false;
 
-        for(String line : file) {
-            if(line.matches(UokikPattern.DZIAL)) {
+        for (String line : file) {
+            if (line.matches(UokikPattern.DZIAL)) {
                 contentStarted = true;
             }
 
-            if(line.matches("^©Kancelaria Sejmu s. (.)*$") || line.equals("2017-06-28")) {
+            if (line.matches("^©Kancelaria Sejmu s. (.)*$") || line.equals("2017-06-28")) {
                 continue;
             }
 
-            if(!contentStarted) {
+            if (!contentStarted) {
                 continue;
             }
 
@@ -28,23 +28,23 @@ public class UokikNormalizer extends Normalizer {
     public List<String> connectLines(List<String> file) {
         List<String> fileWithConnctedLines = new LinkedList<>();
 
-        for(int i = 0; i < file.size()-1; i++) {
+        for (int i = 0; i < file.size() - 1; i++) {
 
             String currentLine = file.get(i);
-            String nextLine = file.get(i+1);
+            String nextLine = file.get(i + 1);
             String connectedLines = null;
             boolean wasConnecting = false;
 
-            if(currentLine.matches(UokikPattern.DZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
+            if (currentLine.matches(UokikPattern.DZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
                 connectedLines = currentLine + " - \"" + nextLine + "\"";
                 wasConnecting = true;
                 i++;
-            } else if(currentLine.matches(UokikPattern.ROZDZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
+            } else if (currentLine.matches(UokikPattern.ROZDZIAL) && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
                 connectedLines = currentLine + " - \"" + nextLine + "\"";
                 wasConnecting = true;
                 i++;
             } else {
-                while((currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
+                while ((currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
                         !currentLine.matches(UokikPattern.DZIAL) &&
                         !currentLine.matches(UokikPattern.ROZDZIAL) &&
                         !currentLine.matches(UokikPattern.ARTYKUL) &&
@@ -58,30 +58,30 @@ public class UokikNormalizer extends Normalizer {
 
                     wasConnecting = true;
 
-                    if(currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) {
+                    if (currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) {
                         connectedLines = currentLine + " " + nextLine;
                     } else {
                         // Matches UokikPattern.KONIEC_MYSLNIKIEM
-                        String currentLineWithoutDash = currentLine.substring(0, currentLine.length()-1);
+                        String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                         connectedLines = currentLineWithoutDash + nextLine;
                     }
 
-                    if(i+1 == file.size()-1) break;
+                    if (i + 1 == file.size() - 1) break;
 
                     i++;
                     currentLine = connectedLines;
-                    nextLine = file.get(i+1);
+                    nextLine = file.get(i + 1);
                 }
             }
 
-            if(wasConnecting) {
+            if (wasConnecting) {
                 fileWithConnctedLines.add(connectedLines);
             } else {
                 fileWithConnctedLines.add(currentLine);
             }
         }
 
-        fileWithConnctedLines.add(file.get(file.size()-1));
+        fileWithConnctedLines.add(file.get(file.size() - 1));
 
         return fileWithConnctedLines;
     }
@@ -89,10 +89,10 @@ public class UokikNormalizer extends Normalizer {
     public List<String> moveUstepsToNewLine(List<String> file) {
         List<String> fileWithMovedLines = new LinkedList<>();
 
-        for(int i = 0; i < file.size(); i++) {
+        for (int i = 0; i < file.size(); i++) {
             String currentLine = file.get(i);
 
-            if(currentLine.matches(UokikPattern.ARTYKUL)) {
+            if (currentLine.matches(UokikPattern.ARTYKUL)) {
                 int indexOfSecondDot = -1;
                 for (int j = 0; j < 2; j++) {
                     indexOfSecondDot = currentLine.indexOf('.', indexOfSecondDot + 1);

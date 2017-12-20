@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class KonstParser extends AbstractParser{
+public class KonstParser extends AbstractParser {
     public KonstParser(List<String> storedFile) {
         super(storedFile);
     }

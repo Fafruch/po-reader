@@ -1,5 +1,5 @@
 public class Normalizer {
     public String normalizeString(String string) {
-        return string.replaceAll("\\s+","").toLowerCase();
+        return string.replaceAll("\\s+", "").toLowerCase();
     }
 }
