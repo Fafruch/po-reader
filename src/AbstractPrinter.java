@@ -80,26 +80,27 @@ abstract public class AbstractPrinter {
         normalizedConfig = normalizer.normalizeString(config);
 
         if (normalizedConfig.matches('^' + Pattern.ARTYKUL + '$')) {
-            // np. Art. 119j
+            // e.g. Art. 119j
             printArtykul();
 
         } else if (normalizedConfig.matches('^' + Pattern.ZAKRES_ARTYKULOW + '$')) {
-            // np. Art. 119j-121b
+            // e.g. Art. 119j-121b
             printArtykuly();
 
         } else if (normalizedConfig.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + '$')) {
-            // np. Art. 30a, ust. 2a.
+            // e.g. Art. 30a, ust. 2a.
             printUstep();
         } else if (normalizedConfig.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + '$')) {
-            // np. Art. 30a, ust. 2a., pkt 1a)
+            // e.g. Art. 30a, ust. 2a., pkt 1a)
             printPunkt();
 
         } else if (normalizedConfig.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + ',' + Pattern.LITERA + '$')) {
-            // np. Art. 30a, ust. 2a., pkt 1a), lit. b)
+            // e.g. Art. 30a, ust. 2a., pkt 1a), lit. b)
             printLitera();
         }
     }
 
+    // e.g. Art. 119j
     private void printArtykul() throws NotFoundException {
         String artykul = normalizedConfig;
 
@@ -113,11 +114,12 @@ abstract public class AbstractPrinter {
         wasPrinting = true;
     }
 
+    // e.g. Art. 119j-121b
     private void printArtykuly() throws NotFoundException, IllegalArgumentException {
         String[] configSplit = normalizedConfig.split("-");
 
-        String firstArtykul = configSplit[0]; // np. art133
-        String lastArtykul = "art" + configSplit[1]; // np. art245
+        String firstArtykul = configSplit[0]; // e.g. art133
+        String lastArtykul = "art" + configSplit[1]; // e.g. art245
 
         if (firstArtykul.compareTo(lastArtykul) > 0) {
             throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
@@ -153,11 +155,12 @@ abstract public class AbstractPrinter {
         wasPrinting = true;
     }
 
+    // e.g. Art. 30a, ust. 2a.
     private void printUstep() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
-        String artykul = configSplit[0]; // np. art133
-        String ustep = configSplit[1].substring(3); // np. 3a
+        String artykul = configSplit[0]; // e.g. art133
+        String ustep = configSplit[1].substring(3); // e.g. 3a
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -175,12 +178,13 @@ abstract public class AbstractPrinter {
         wasPrinting = true;
     }
 
+    // e.g. Art. 30a, ust. 2a., pkt 1a)
     private void printPunkt() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
-        String artykul = configSplit[0]; // np. art133
-        String ustep = configSplit[1].substring(3); // np. 3a
-        String punkt = configSplit[2].substring(3); // np. 10b
+        String artykul = configSplit[0]; // e.g. art133
+        String ustep = configSplit[1].substring(3); // e.g. 3a
+        String punkt = configSplit[2].substring(3); // e.g. 10b
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -204,13 +208,14 @@ abstract public class AbstractPrinter {
         wasPrinting = true;
     }
 
+    // e.g. Art. 30a, ust. 2a., pkt 1a), lit. b)
     private void printLitera() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
-        String artykul = configSplit[0]; // np. art133
-        String ustep = configSplit[1].substring(3); // np. 3a
-        String punkt = configSplit[2].substring(3); // np. 10b
-        String litera = configSplit[3].substring(3); // np. a
+        String artykul = configSplit[0]; // e.g. art133
+        String ustep = configSplit[1].substring(3); // e.g. 3a
+        String punkt = configSplit[2].substring(3); // e.g. 10b
+        String litera = configSplit[3].substring(3); // e.g. a
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 

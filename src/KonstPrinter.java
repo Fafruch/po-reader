@@ -7,17 +7,17 @@ public class KonstPrinter extends AbstractPrinter {
         super.printElements();
 
         if (normalizedConfig.matches("^" + Pattern.ROZDZIAL + "$")) {
-            // np. Rozdział III
+            // e.g. Rozdział III
             printRozdzial();
 
         } else if (normalizedConfig.matches("^" + Pattern.ROZDZIAL + ',' + Pattern.DZIAL + "$")) {
-            // np. Rozdział III, dział 2
+            // e.g. Rozdział III, dział 2
             printDzial();
         }
     }
 
     private void printRozdzial() throws NotFoundException {
-        String rozdzial = normalizedConfig; // np. rodzialiii
+        String rozdzial = normalizedConfig; // e.g. rodzialiii
 
         Node rozdzialNode = findNodeAtDepth(root, rozdzial, 1);
 
@@ -32,8 +32,8 @@ public class KonstPrinter extends AbstractPrinter {
     private void printDzial() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
-        String rozdzial = configSplit[0]; // np. rozdzialiii
-        int dzialIndex = Integer.parseInt(configSplit[1].substring(5)) - 1; // np. 2
+        String rozdzial = configSplit[0]; // e.g. rozdzialiii
+        int dzialIndex = Integer.parseInt(configSplit[1].substring(5)) - 1; // e.g. 2
 
         Node rozdzialNode = findNodeAtDepth(root, rozdzial, 1);
 
