@@ -263,8 +263,7 @@ abstract public class AbstractPrinter {
         } else if (node.getDepth() == 5) {
             System.out.println("Punkt " + (index + 1) + ")");
         } else if (node.getDepth() == 6) {
-            char litera = (char) (index + 97);
-            System.out.println("Litera " + litera + ")");
+            System.out.println("Litera " + ((char) (index + 97)) + ")");
         } else {
             System.out.println(node.getData());
         }
