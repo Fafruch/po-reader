@@ -1,6 +1,6 @@
 abstract public class AbstractPrinter {
     private String mode;
-    private String config;
+    private String config = "";
     protected String normalizedConfig;
     protected Node root;
     protected boolean wasPrinting = false;
@@ -17,7 +17,11 @@ abstract public class AbstractPrinter {
         this.root = root;
 
         if (mode.equals("-t")) {
-            printTableOfContents(root, 0);
+            printTableOfContents();
+
+        } else if (mode.equals("-a")) {
+            printAll();
+
         } else {
             printElements();
 
@@ -234,6 +238,14 @@ abstract public class AbstractPrinter {
 
         printNodeAndItsChildren(literaNode);
         wasPrinting = true;
+    }
+
+    private void printAll() {
+        printNodeAndItsChildren(root);
+    }
+
+    private void printTableOfContents() {
+        printTableOfContents(root, 0);
     }
 
     private void printTableOfContents(Node node, int index) {
