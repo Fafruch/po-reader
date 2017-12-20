@@ -1,45 +1,49 @@
 public class UokikPrinter extends AbstractPrinter {
+    private String normalizedConfig;
+
     public UokikPrinter(String[] args) {
         super(args);
     }
 
     protected void printElements() throws NotFoundException, IllegalArgumentException {
         UokikNormalizer uokikNormalizer = new UokikNormalizer();
-        config = uokikNormalizer.normalizeString(config);
+        normalizedConfig = uokikNormalizer.normalizeString(config);
 
-        if(config.matches('^' + Pattern.DZIAL + '$')) {
+        // System.out.println(normalizedConfig);
+
+        if(normalizedConfig.matches('^' + Pattern.DZIAL + '$')) {
             // np. Dział IIIA
             printDzial();
 
-        } else if(config.matches('^' + Pattern.DZIAL + ',' + Pattern.ROZDZIAL + '$')) {
+        } else if(normalizedConfig.matches('^' + Pattern.DZIAL + ',' + Pattern.ROZDZIAL + '$')) {
             // np. Dział IIIA, rozdział 2
             printRozdzial();
 
-        } else if(config.matches('^' + Pattern.ARTYKUL + '$')) {
+        } else if(normalizedConfig.matches('^' + Pattern.ARTYKUL + '$')) {
             // np. Art. 119j
             printArtykul();
 
-        } else if(config.matches('^' + Pattern.ZAKRES_ARTYKULOW + '$')) {
+        } else if(normalizedConfig.matches('^' + Pattern.ZAKRES_ARTYKULOW + '$')) {
             // np. Art. 119j-121b
             printArtykuly();
 
-        } else if(config.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + '$')) {
+        } else if(normalizedConfig.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + '$')) {
             // np. Art. 30a, ust. 2a.
             printUstep();
-        } else if(config.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + '$')) {
+        } else if(normalizedConfig.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + '$')) {
             // np. Art. 30a, ust. 2a., pkt 1a)
             printPunkt();
 
-        } else if(config.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + ',' + Pattern.LITERA + '$')) {
+        } else if(normalizedConfig.matches('^' + Pattern.ARTYKUL + ',' + Pattern.USTEP + ',' + Pattern.PUNKT + ',' + Pattern.LITERA + '$')) {
             // np. Art. 30a, ust. 2a., pkt 1a), lit. b)
             printLitera();
+        } else {
+            throw new IllegalArgumentException("Bad input format for elements configuration! Config '" + config + "' is not valid.");
         }
     }
 
     private void printDzial() throws NotFoundException {
-        // np. Dział IIIA
-        int indexOfComma = config.indexOf(',');
-        String dzial = config.substring(0, indexOfComma);
+        String dzial = normalizedConfig;
 
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
@@ -51,9 +55,10 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printRozdzial() throws NotFoundException {
-        int indexOfComma = config.indexOf(',');
-        String dzial = config.substring(0, indexOfComma);
-        String rozdzial = config.substring(indexOfComma + 1);
+        String[] configSplit = normalizedConfig.split(",");
+
+        String dzial = configSplit[0]; // np. art133
+        String rozdzial = configSplit[1]; // np. art245
 
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
@@ -71,7 +76,7 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printArtykul() throws NotFoundException {
-        String artykul = config;
+        String artykul = normalizedConfig;
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -83,10 +88,10 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printArtykuly() throws NotFoundException, IllegalArgumentException {
-        int indexOfDash = config.indexOf('-');
+        String[] configSplit = normalizedConfig.split("-");
 
-        String firstArtykul = config.substring(0, indexOfDash);
-        String lastArtykul = "art." + config.substring(indexOfDash + 1);
+        String firstArtykul = configSplit[0]; // np. art133
+        String lastArtykul = "art" + configSplit[1]; // np. art245
 
         if(firstArtykul.compareTo(lastArtykul) > 0) {
             throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
@@ -101,13 +106,16 @@ public class UokikPrinter extends AbstractPrinter {
             String data = currentNode.getData();
 
             normalizedData = uokikNormalizer.normalizeString(data);
-            normalizedData = uokikNormalizer.removeLastChar(normalizedData);
 
-            if(firstArtykul.compareTo(normalizedData) <= 0
-                    && normalizedData.compareTo(lastArtykul) <= 0
-                    && normalizedData.length() >= firstArtykul.length()
-                    && normalizedData.length() >= lastArtykul.length()) {
+            // extract only numerical values from data
+            int firstArtykulIndex = Integer.parseInt(firstArtykul.replaceAll("[a-zA-Z]",""));
+            int currentArtykulIndex = Integer.parseInt(normalizedData.replaceAll("[a-zA-Z]",""));
+            int lastArtykulIndex = Integer.parseInt(lastArtykul.replaceAll("[a-zA-Z]",""));
 
+            boolean isNumericalBetween = firstArtykulIndex <= currentArtykulIndex && currentArtykulIndex <= lastArtykulIndex;
+            boolean isAlphabeticalBetween = firstArtykul.compareTo(normalizedData) <= 0 && normalizedData.compareTo(lastArtykul) <= 0;
+
+            if(isNumericalBetween && isAlphabeticalBetween) {
                 wasPrinting = true;
                 printNodeAndItsChildren(currentNode);
             }
@@ -119,10 +127,10 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printUstep() throws NotFoundException {
-        int indexOfComma = config.indexOf(',');
+        String[] configSplit = normalizedConfig.split(",");
 
-        String artykul = config.substring(0, indexOfComma);
-        String ustep = config.substring(indexOfComma + 5);
+        String artykul = configSplit[0]; // np. art133
+        String ustep = configSplit[1].substring(3); // np. 3a
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -140,13 +148,11 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printPunkt() throws NotFoundException {
-        int firstIndexOfComma = config.indexOf(',');
-        int lastIndexOfComma = config.lastIndexOf(',');
-        int indexOfParenthesis = config.lastIndexOf(')');
+        String[] configSplit = normalizedConfig.split(",");
 
-        String artykul = config.substring(0, firstIndexOfComma);
-        String ustep = config.substring(firstIndexOfComma + 5, lastIndexOfComma);
-        String punkt = config.substring(lastIndexOfComma + 4, indexOfParenthesis);
+        String artykul = configSplit[0]; // np. art133
+        String ustep = configSplit[1].substring(3); // np. 3a
+        String punkt = configSplit[2].substring(3); // np. 10b
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -170,15 +176,12 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printLitera() throws NotFoundException {
-        int firstIndexOfComma = config.indexOf(',');
-        int secondIndexOfComma = firstIndexOfComma + config.substring(firstIndexOfComma + 1).indexOf(',');
-        int firstIndexOfParenthesis = config.indexOf(')');
-        int lastIndexOfParenthesis = config.lastIndexOf(')');
+        String[] configSplit = normalizedConfig.split(",");
 
-        String artykul = config.substring(0, firstIndexOfComma);
-        String ustep = config.substring(firstIndexOfComma + 5, secondIndexOfComma);
-        String punkt = config.substring(secondIndexOfComma + 5, firstIndexOfParenthesis);
-        String litera = config.substring(firstIndexOfParenthesis + 6, lastIndexOfParenthesis);
+        String artykul = configSplit[0]; // np. art133
+        String ustep = configSplit[1].substring(3); // np. 3a
+        String punkt = configSplit[2].substring(3); // np. 10b
+        String litera = configSplit[3].substring(3); // np. a
 
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
@@ -212,12 +215,27 @@ public class UokikPrinter extends AbstractPrinter {
         if(root.getDepth() == depth) {
             String data = root.getData();
 
+            /*System.out.println();
+
+            System.out.println("NAME: " + name);
+            System.out.println("BEFORE NORMALIZING: " + data);*/
+
             UokikNormalizer uokikNormalizer = new UokikNormalizer();
             String normalizedData = uokikNormalizer.normalizeString(data);
 
-            // System.out.println(normalizedData);
+            // keep only the chars that we want to check equality of
+            if(normalizedData.length() > name.length()) {
+                normalizedData = normalizedData.substring(0, name.length());
+            }
 
-            if(normalizedData.matches(name + "(.)*$")) {
+            /*System.out.println("NORMALIZED: " + normalizedData);
+
+            System.out.println();*/
+
+            /*System.out.println(name.length());
+            System.out.println(normalizedData.length());*/
+
+            if(normalizedData.matches(name)) {
                 return root;
             } else {
                 return null;

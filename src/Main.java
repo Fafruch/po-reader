@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
 
             checkArgs(args);
@@ -17,7 +17,7 @@ public class Main {
 
         } catch (FileNotFoundException e) {
             System.out.println("Wrong path: " + args[0] + ". Could not find file.");
-        } catch (Exception ex) {
+        } catch (NotFoundException | IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
     }

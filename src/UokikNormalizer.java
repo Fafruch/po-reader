@@ -112,7 +112,7 @@ public class UokikNormalizer {
     }
 
     public String normalizeString(String string) {
-        return string.replaceAll("\\s+","").toLowerCase();
+        return string.replaceAll("\\s+|\\.|\\)","").toLowerCase();
     }
     public String removeLastChar(String string) {
         return string.substring(0, string.length() - 1);
