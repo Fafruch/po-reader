@@ -32,13 +32,11 @@ public class UokikNormalizer extends Normalizer {
 
             String currentLine = file.get(i);
             String nextLine = file.get(i + 1);
-            String connectedLines = null;
-            boolean wasConnecting = false;
+            String connectedLines;
 
             if ((currentLine.matches(UokikPattern.DZIAL) || currentLine.matches(UokikPattern.ROZDZIAL))
                     && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
-                connectedLines = currentLine + " - \"" + nextLine + "\"";
-                wasConnecting = true;
+                currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
             } else while (
                     (currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
@@ -53,8 +51,6 @@ public class UokikNormalizer extends Normalizer {
                     !nextLine.matches(UokikPattern.PUNKT) &&
                     !nextLine.matches(UokikPattern.LITERA)
                     ) {
-
-                wasConnecting = true;
 
                 if (currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) {
                     connectedLines = currentLine + " " + nextLine;
@@ -71,11 +67,7 @@ public class UokikNormalizer extends Normalizer {
                 nextLine = file.get(i + 1);
             }
 
-            if (wasConnecting) {
-                fileWithConnctedLines.add(connectedLines);
-            } else {
-                fileWithConnctedLines.add(currentLine);
-            }
+            fileWithConnctedLines.add(currentLine);
         }
 
         fileWithConnctedLines.add(file.get(file.size() - 1));

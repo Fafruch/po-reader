@@ -36,8 +36,7 @@ public class KonstNormalizer extends Normalizer {
 
             String currentLine = file.get(i);
             String nextLine = file.get(i + 1);
-            String connectedLines = null;
-            boolean wasConnecting = false;
+            String connectedLines;
 
             while ((currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
                     !currentLine.matches(KonstPattern.DZIAL) &&
@@ -49,8 +48,6 @@ public class KonstNormalizer extends Normalizer {
                     !nextLine.matches(KonstPattern.ARTYKUL) &&
                     !nextLine.matches(KonstPattern.USTEP) &&
                     !nextLine.matches(KonstPattern.PUNKT)) {
-
-                wasConnecting = true;
 
                 if (currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) {
                     connectedLines = currentLine + " " + nextLine;
@@ -67,11 +64,7 @@ public class KonstNormalizer extends Normalizer {
                 nextLine = file.get(i + 1);
             }
 
-            if (wasConnecting) {
-                fileWithConnctedLines.add(connectedLines);
-            } else {
-                fileWithConnctedLines.add(currentLine);
-            }
+            fileWithConnctedLines.add(currentLine);
         }
 
         fileWithConnctedLines.add(file.get(file.size() - 1));
