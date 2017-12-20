@@ -17,7 +17,7 @@ public class UokikPrinter extends AbstractPrinter {
     }
 
     private void printDzial() throws NotFoundException {
-        String dzial = normalizedConfig;
+        String dzial = normalizedConfig; // np. dzialiiia
 
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
@@ -32,8 +32,8 @@ public class UokikPrinter extends AbstractPrinter {
     private void printRozdzial() throws NotFoundException {
         String[] configSplit = normalizedConfig.split(",");
 
-        String dzial = configSplit[0]; // np. art133
-        String rozdzial = configSplit[1]; // np. art245
+        String dzial = configSplit[0]; // np. dzialiiia
+        String rozdzial = configSplit[1]; // np. rozdzial2
 
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 

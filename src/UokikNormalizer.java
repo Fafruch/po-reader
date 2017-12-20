@@ -39,25 +39,19 @@ public class UokikNormalizer extends Normalizer {
                 currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
             } else while (
-                    (currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
-                    !currentLine.matches(UokikPattern.DZIAL) &&
-                    !currentLine.matches(UokikPattern.ROZDZIAL) &&
-                    !currentLine.matches(UokikPattern.ARTYKUL) &&
-                    (nextLine.matches(UokikPattern.KONIEC_MYSLNIKIEM) || nextLine.matches(UokikPattern.KONIEC_NORMALNIE)) &&
-                    !nextLine.matches(UokikPattern.DZIAL) &&
-                    !nextLine.matches(UokikPattern.ROZDZIAL) &&
-                    !nextLine.matches(UokikPattern.ARTYKUL) &&
-                    !nextLine.matches(UokikPattern.USTEP) &&
-                    !nextLine.matches(UokikPattern.PUNKT) &&
-                    !nextLine.matches(UokikPattern.LITERA)
+                    (currentLine.matches(UokikPattern.USTEP) ||
+                    currentLine.matches(UokikPattern.PUNKT) ||
+                    currentLine.matches(UokikPattern.LITERA) ||
+                    currentLine.matches(UokikPattern.ZWYKLA_LINIA)) &&
+                    nextLine.matches(UokikPattern.ZWYKLA_LINIA)
                     ) {
 
-                if (currentLine.matches(UokikPattern.KONIEC_NORMALNIE)) {
-                    connectedLines = currentLine + " " + nextLine;
-                } else {
-                    // matches UokikPattern.KONIEC_MYSLNIKIEM
+                if (currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM)) {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                     connectedLines = currentLineWithoutDash + nextLine;
+                } else {
+                    connectedLines = currentLine + " " + nextLine;
+
                 }
 
                 if (i + 1 == file.size() - 1) break;

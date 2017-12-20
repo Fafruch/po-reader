@@ -41,23 +41,17 @@ public class KonstNormalizer extends Normalizer {
             if (currentLine.matches(KonstPattern.ROZDZIAL) && nextLine.matches(KonstPattern.DZIAL)) {
                 currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
-            } else while ((currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
-                    !currentLine.matches(KonstPattern.DZIAL) &&
-                    !currentLine.matches(KonstPattern.ROZDZIAL) &&
-                    !currentLine.matches(KonstPattern.ARTYKUL) &&
-                    (nextLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || nextLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
-                    !nextLine.matches(KonstPattern.DZIAL) &&
-                    !nextLine.matches(KonstPattern.ROZDZIAL) &&
-                    !nextLine.matches(KonstPattern.ARTYKUL) &&
-                    !nextLine.matches(KonstPattern.USTEP) &&
-                    !nextLine.matches(KonstPattern.PUNKT)) {
-
-                if (currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) {
-                    connectedLines = currentLine + " " + nextLine;
-                } else {
-                    // matches KonstPattern.KONIEC_MYSLNIKIEM
+            } else while (
+                    (currentLine.matches(KonstPattern.USTEP) ||
+                    currentLine.matches(KonstPattern.PUNKT) ||
+                    currentLine.matches(KonstPattern.ZWYKLA_LINIA)) &&
+                    nextLine.matches(KonstPattern.ZWYKLA_LINIA)
+                    ) {
+                if (currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM)) {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                     connectedLines = currentLineWithoutDash + nextLine;
+                } else {
+                    connectedLines = currentLine + " " + nextLine;
                 }
 
                 if (i + 1 == file.size() - 1) break;
