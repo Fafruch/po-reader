@@ -5,7 +5,10 @@ abstract public class AbstractPrinter {
 
     public AbstractPrinter(String[] args) {
         this.mode = args[1];
-        this.config = args[2];
+
+        if(args.length == 3) {
+            this.config = args[2];
+        }
     }
 
     public void print(Node root) throws NotFoundException, IllegalArgumentException{
