@@ -38,7 +38,10 @@ public class KonstNormalizer extends Normalizer {
             String nextLine = file.get(i + 1);
             String connectedLines;
 
-            while ((currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
+            if (currentLine.matches(KonstPattern.ROZDZIAL) && nextLine.matches(KonstPattern.DZIAL)) {
+                currentLine = currentLine + " - \"" + nextLine + "\"";
+                i++;
+            } else while ((currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM) || currentLine.matches(KonstPattern.KONIEC_NORMALNIE)) &&
                     !currentLine.matches(KonstPattern.DZIAL) &&
                     !currentLine.matches(KonstPattern.ROZDZIAL) &&
                     !currentLine.matches(KonstPattern.ARTYKUL) &&
