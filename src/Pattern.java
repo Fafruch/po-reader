@@ -1,9 +1,9 @@
 final class Pattern {
-    static final String ROZDZIAL = "^Rozdział \\w*$";
-    static final String DZIAL = "^([A-Z,ŻŹĆĄŚĘŁÓŃ](\\s)?)+$";
-    static final String ARTYKUL = "^(Art. )(\\d)+(.)$";
-    static final String USTEP = "^(\\d+\\. )(.)*$";
-    static final String PUNKT = "^(\\d+)\\)(.)*$";
-    static final String KONIEC_MYSLNIKIEM = "^(.)*-$";
-    static final String KONIEC_NORMALNIE = "^(.)*[^-]$";
+    static final String DZIAL = "dzia[łl]\\w+";
+    static final String ROZDZIAL = "rozdzia[łl]\\w+";
+    static final String ARTYKUL = "art\\d+[a-z]*";
+    static final String ZAKRES_ARTYKULOW = ARTYKUL + "-\\d+[a-z]*";
+    static final String USTEP = "ust\\d+[a-z]*";
+    static final String PUNKT = "pkt\\d+[a-z]*";
+    static final String LITERA = "lit[a-z]+";
 }
