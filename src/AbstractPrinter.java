@@ -47,8 +47,13 @@ abstract public class AbstractPrinter {
 
     protected Node findNodeAtDepth(Node root, String key, int depth) {
         if (root.getDepth() == depth) {
-            int keyIndex = Integer.parseInt(key.replaceAll("[a-zA-Z]", ""));
             String data = root.getData();
+
+            // only for usteps without explicit index on start
+            int keyIndex = -1;
+            if(root.getDepth() == 4) {
+                keyIndex = Integer.parseInt(key.replaceAll("[a-zA-Z]", ""));
+            }
 
             Normalizer normalizer = new Normalizer();
             String normalizedData = normalizer.normalizeString(data);
