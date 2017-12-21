@@ -6,7 +6,7 @@ public class KonstParser extends AbstractParser {
     }
 
     public Node parseToTree(Node root) {
-        this.stack.add(root);
+        stack.add(root);
 
         for (String line : storedFile) {
             int depth = 0;
