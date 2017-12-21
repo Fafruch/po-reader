@@ -22,7 +22,7 @@ public class Main {
         }
     }
 
-    static private void checkArgs(String args[]) {
+    private static void checkArgs(String args[]) {
         if (args.length < 2) {
             throw new IllegalArgumentException("Podano za mało argumentów. Jako drugi argument podaj: \n- '-t' dla spisu treści, \n- '-a' dla wypisania całego sformatowanego pliku \n- '-e' dla wybrania konkretnego elementu.");
 
@@ -34,7 +34,7 @@ public class Main {
         }
     }
 
-    static private List<String> convertFileToList(BufferedReader br) throws IOException {
+    private static List<String> convertFileToList(BufferedReader br) throws IOException {
         List<String> storedFile = new LinkedList<>();
         String line;
 
@@ -45,7 +45,7 @@ public class Main {
         return storedFile;
     }
 
-    static private void runAppWith(String args[], List<String> file)
+    private static void runAppWith(String args[], List<String> file)
             throws NotFoundException, IllegalArgumentException, NotSupportedFileException {
         Node emptyDataTree = new Node(0, "");
         String controlLine = file.get(0);
