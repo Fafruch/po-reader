@@ -48,12 +48,8 @@ public class KonstNormalizer extends Normalizer {
             if (currentLine.matches(KonstPattern.ROZDZIAL) && nextLine.matches(KonstPattern.DZIAL)) {
                 currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
-            } else while (
-                    (currentLine.matches(KonstPattern.USTEP) ||
-                    currentLine.matches(KonstPattern.PUNKT) ||
-                    currentLine.matches(KonstPattern.ZWYKLA_LINIA)) &&
-                    nextLine.matches(KonstPattern.ZWYKLA_LINIA)
-                    ) {
+            } else while (currentLine.matches(KonstPattern.USTEP_PUNKT_LUB_ZWYKLA_LINIA) && nextLine.matches(KonstPattern.ZWYKLA_LINIA)) {
+
                 if (currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM)) {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                     connectedLines = currentLineWithoutDash + nextLine;
@@ -61,17 +57,15 @@ public class KonstNormalizer extends Normalizer {
                     connectedLines = currentLine + " " + nextLine;
                 }
 
-                if (i + 1 == file.size() - 1) break;
-
-                i++;
                 currentLine = connectedLines;
+
+                if (i + 1 == file.size() - 1) break;
+                i++;
                 nextLine = file.get(i + 1);
             }
 
             fileWithConnctedLines.add(currentLine);
         }
-
-        fileWithConnctedLines.add(file.get(file.size() - 1));
 
         return fileWithConnctedLines;
     }

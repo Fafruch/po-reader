@@ -46,26 +46,19 @@ public class UokikNormalizer extends Normalizer {
                     && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
                 currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
-            } else while (
-                    (currentLine.matches(UokikPattern.USTEP) ||
-                    currentLine.matches(UokikPattern.PUNKT) ||
-                    currentLine.matches(UokikPattern.LITERA) ||
-                    currentLine.matches(UokikPattern.ZWYKLA_LINIA)) &&
-                    nextLine.matches(UokikPattern.ZWYKLA_LINIA)
-                    ) {
+            } else while (currentLine.matches(UokikPattern.USTEP_PUNKT_LITERA_LUB_ZWYKLA_LINIA) && nextLine.matches(UokikPattern.ZWYKLA_LINIA)) {
 
                 if (currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM)) {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);
                     connectedLines = currentLineWithoutDash + nextLine;
                 } else {
                     connectedLines = currentLine + " " + nextLine;
-
                 }
 
-                if (i + 1 == file.size() - 1) break;
-
-                i++;
                 currentLine = connectedLines;
+
+                if (i + 1 == file.size() - 1) break;
+                i++;
                 nextLine = file.get(i + 1);
             }
 

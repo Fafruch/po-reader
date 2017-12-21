@@ -6,4 +6,5 @@ final class KonstPattern {
     static final String PUNKT = "^(\\d+)\\)(.)*$";
     static final String KONIEC_MYSLNIKIEM = "^(.)*-$";
     static final String ZWYKLA_LINIA = "(?!" + ROZDZIAL + "|" + DZIAL + "|" + ARTYKUL + "|" + USTEP + "|" + PUNKT + "*$).*";
+    static final String USTEP_PUNKT_LUB_ZWYKLA_LINIA = "(" + USTEP + "|" + PUNKT + "|" + ZWYKLA_LINIA + "$).*";
 }
