@@ -45,19 +45,21 @@ abstract public class AbstractPrinter {
         }
     }
 
-    protected Node findNodeAtDepth(Node root, String name, int depth) {
+    protected Node findNodeAtDepth(Node root, String key, int depth) {
         if (root.getDepth() == depth) {
+            int keyIndex = Integer.parseInt(key.replaceAll("[a-zA-Z]", ""));
             String data = root.getData();
 
             Normalizer normalizer = new Normalizer();
             String normalizedData = normalizer.normalizeString(data);
 
             // keep only the chars that we want to check equality of
-            if (normalizedData.length() > name.length()) {
-                normalizedData = normalizedData.substring(0, name.length());
+            if (normalizedData.length() > key.length()) {
+                normalizedData = normalizedData.substring(0, key.length());
             }
 
-            if (normalizedData.matches(name)) {
+            // if ustep has no index and we seek 'ustęp 1', the first is true, else check if element keys are the same
+            if (keyIndex == 1 || normalizedData.matches(key)) {
                 return root;
             } else {
                 return null;
@@ -65,7 +67,7 @@ abstract public class AbstractPrinter {
         }
 
         for (Node child : root.getChildren()) {
-            Node result = findNodeAtDepth(child, name, depth);
+            Node result = findNodeAtDepth(child, key, depth);
 
             if (result != null) {
                 return result;
