@@ -9,30 +9,19 @@ public class UokikParser extends AbstractParser {
         this.stack.add(root);
 
         for (String line : storedFile) {
-            boolean lineIsDzial = line.matches(UokikPattern.DZIAL);
-            boolean lineIsRodzial = line.matches(UokikPattern.ROZDZIAL);
-            boolean lineIsArtykul = line.matches(UokikPattern.ARTYKUL);
-            boolean lineIsUstep = line.matches(UokikPattern.USTEP) || (
-                    !line.matches(UokikPattern.ROZDZIAL) &&
-                            !line.matches(UokikPattern.DZIAL) &&
-                            !line.matches(UokikPattern.USTEP) &&
-                            !line.matches(UokikPattern.PUNKT) &&
-                            !line.matches(UokikPattern.LITERA));
-            boolean lineIsPunkt = line.matches(UokikPattern.PUNKT);
-            boolean lineIsLitera = line.matches(UokikPattern.LITERA);
-
             int depth = 0;
-            if (lineIsDzial) {
+
+            if (line.matches(UokikPattern.DZIAL)) {
                 depth = 1;
-            } else if (lineIsRodzial) {
+            } else if (line.matches(UokikPattern.ROZDZIAL)) {
                 depth = 2;
-            } else if (lineIsArtykul) {
+            } else if (line.matches(UokikPattern.ARTYKUL)) {
                 depth = 3;
-            } else if (lineIsUstep) {
+            } else if (line.matches(UokikPattern.USTEP) || line.matches(UokikPattern.NIC_OPROCZ_USTEPU)) {
                 depth = 4;
-            } else if (lineIsPunkt) {
+            } else if (line.matches(UokikPattern.PUNKT)) {
                 depth = 5;
-            } else if (lineIsLitera) {
+            } else if (line.matches(UokikPattern.LITERA)) {
                 depth = 6;
             }
 

@@ -9,26 +9,17 @@ public class KonstParser extends AbstractParser {
         this.stack.add(root);
 
         for (String line : storedFile) {
-            boolean lineIsRodzial = line.matches(KonstPattern.ROZDZIAL);
-            boolean lineIsDzial = line.matches(KonstPattern.DZIAL);
-            boolean lineIsArtykul = line.matches(KonstPattern.ARTYKUL);
-            boolean lineIsUstep = line.matches(KonstPattern.USTEP) || (
-                    !line.matches(KonstPattern.ROZDZIAL) &&
-                            !line.matches(KonstPattern.DZIAL) &&
-                            !line.matches(KonstPattern.USTEP) &&
-                            !line.matches(KonstPattern.PUNKT));
-            boolean lineIsPunkt = line.matches(KonstPattern.PUNKT);
-
             int depth = 0;
-            if (lineIsRodzial) {
+
+            if (line.matches(KonstPattern.ROZDZIAL)) {
                 depth = 1;
-            } else if (lineIsDzial) {
+            } else if (line.matches(KonstPattern.DZIAL)) {
                 depth = 2;
-            } else if (lineIsArtykul) {
+            } else if (line.matches(KonstPattern.ARTYKUL)) {
                 depth = 3;
-            } else if (lineIsUstep) {
+            } else if (line.matches(KonstPattern.USTEP) || line.matches(KonstPattern.NIC_OPROCZ_USTEPU)) {
                 depth = 4;
-            } else if (lineIsPunkt) {
+            } else if (line.matches(KonstPattern.PUNKT)) {
                 depth = 5;
             }
 

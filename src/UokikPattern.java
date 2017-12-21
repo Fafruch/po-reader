@@ -9,5 +9,5 @@ final class UokikPattern {
     static final String TYTUL_DZIALU = "^([A-Z,ŻŹĆĄŚĘŁÓŃ])+(.)*[^.]$";
     static final String ZWYKLA_LINIA = "(?!" + ROZDZIAL + "|" + DZIAL + "|" + ARTYKUL + "|" + USTEP + "|" + PUNKT + "|" + LITERA + "*$).*";
     static final String USTEP_PUNKT_LITERA_LUB_ZWYKLA_LINIA = "(" + USTEP + "|" + PUNKT + "|" + LITERA + "|" + ZWYKLA_LINIA + "$).*";
-
+    static final String NIC_OPROCZ_USTEPU = "(?!" + ROZDZIAL + "|" + DZIAL + "|" + ARTYKUL + "|" + PUNKT + "|" + LITERA + "$).*";
 }
