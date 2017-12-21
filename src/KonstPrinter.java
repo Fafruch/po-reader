@@ -22,7 +22,7 @@ public class KonstPrinter extends AbstractPrinter {
         Node rozdzialNode = findNodeAtDepth(root, rozdzial, 1);
 
         if (rozdzialNode == null) {
-            throw new NotFoundException("Nie ma takiego rozdzialu!");
+            throw new NotFoundException("Nie ma takiego rozdziału!");
         }
 
         printNodeAndItsChildren(rozdzialNode);
@@ -38,11 +38,11 @@ public class KonstPrinter extends AbstractPrinter {
         Node rozdzialNode = findNodeAtDepth(root, rozdzial, 1);
 
         if (rozdzialNode == null) {
-            throw new NotFoundException("Nie ma takiego rozdzialu!");
+            throw new NotFoundException("Nie ma takiego rozdziału!");
         }
 
         if (dzialIndex < 0 || dzialIndex >= rozdzialNode.getChildren().size()) {
-            throw new NotFoundException("Nie ma takiego dzialu!");
+            throw new NotFoundException("Nie ma takiego działu!");
         }
 
         Node dzialNode = rozdzialNode.getChildren().get(dzialIndex);

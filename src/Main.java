@@ -24,10 +24,13 @@ public class Main {
 
     static private void checkArgs(String args[]) {
         if (args.length < 2) {
-            throw new IllegalArgumentException("Podano za mało argumentów. Jako drugi argument podaj: \n - '-t' dla spisu streści, \n - '-a' dla wypisania całego sformatowanego pliku lub \n - '-e' dla wybrania konkretnego elementu.");
+            throw new IllegalArgumentException("Podano za mało argumentów. Jako drugi argument podaj: \n- '-t' dla spisu treści, \n- '-a' dla wypisania całego sformatowanego pliku \n- '-e' dla wybrania konkretnego elementu.");
 
         } else if (!args[1].equals("-t") && !args[1].equals("-a") && !args[1].equals("-e")) {
-            throw new IllegalArgumentException("Podano zły tryb. Jako drugi argument podaj: \n - '-t' dla spisu streści, \n - '-a' dla wypisania całego sformatowanego pliku lub \n - '-e' dla wybrania konkretnego elementu.");
+            throw new IllegalArgumentException("Podano zły tryb. Jako drugi argument podaj: \n - '-t' dla spisu streści, \n - '-a' dla wypisania całego sformatowanego pliku \n - '-e' dla wybrania konkretnego elementu.");
+
+        } else if (args.length < 3 && args[1].equals("-e")) {
+            throw new IllegalArgumentException("Nie podano elementu do wypisania jako trzeci argument. Spróbuj np. 'Art. 123, ust. 2., pkt 3)'.");
         }
     }
 

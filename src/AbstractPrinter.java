@@ -26,7 +26,7 @@ abstract public class AbstractPrinter {
             printElements();
 
             if (!wasPrinting) {
-                throw new IllegalArgumentException("Bad input format for elements configuration! Config '" + config + "' is not valid.");
+                throw new IllegalArgumentException("Zła konfiguracja dla opcji '-e'. Konfiguracja '" + config + "' nie jest poprawna.");
             }
         }
     }
@@ -107,7 +107,7 @@ abstract public class AbstractPrinter {
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
         if (artykulNode == null) {
-            throw new NotFoundException("Nie ma takiego artykulu!");
+            throw new NotFoundException("Nie ma takiego artykułu!");
         }
 
         printNodeAndItsChildren(artykulNode);
@@ -122,7 +122,7 @@ abstract public class AbstractPrinter {
         String lastArtykul = "art" + configSplit[1]; // e.g. art245
 
         if (firstArtykul.compareTo(lastArtykul) > 0) {
-            throw new IllegalArgumentException("Niepoprawny zakres artykulow!");
+            throw new IllegalArgumentException("Niepoprawny zakres artykułów!");
         }
 
         Normalizer normalizer = new Normalizer();
@@ -149,7 +149,7 @@ abstract public class AbstractPrinter {
         }
 
         if (!foundArticles) {
-            throw new NotFoundException("Nie ma takich artykulow!");
+            throw new NotFoundException("Nie ma takich artykułów!");
         }
 
         wasPrinting = true;
@@ -165,13 +165,13 @@ abstract public class AbstractPrinter {
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
         if (artykulNode == null) {
-            throw new NotFoundException("Nie znaleziono takiego artykulu!");
+            throw new NotFoundException("Nie znaleziono takiego artykułu!");
         }
 
         Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
         if (ustepNode == null) {
-            throw new NotFoundException("Nie znaleziono takiego ustepu!");
+            throw new NotFoundException("Nie znaleziono takiego ustępu!");
         }
 
         printNodeAndItsChildren(ustepNode);
@@ -189,13 +189,13 @@ abstract public class AbstractPrinter {
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
         if (artykulNode == null) {
-            throw new NotFoundException("Nie znaleziono takiego artykulu!");
+            throw new NotFoundException("Nie znaleziono takiego artykułu!");
         }
 
         Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
         if (ustepNode == null) {
-            throw new NotFoundException("Nie znaleziono takiego ustepu!");
+            throw new NotFoundException("Nie znaleziono takiego ustępu!");
         }
 
         Node punktNode = findNodeAtDepth(ustepNode, punkt, 5);
@@ -220,13 +220,13 @@ abstract public class AbstractPrinter {
         Node artykulNode = findNodeAtDepth(root, artykul, 3);
 
         if (artykulNode == null) {
-            throw new NotFoundException("Nie znaleziono takiego artykulu!");
+            throw new NotFoundException("Nie znaleziono takiego artykułu!");
         }
 
         Node ustepNode = findNodeAtDepth(artykulNode, ustep, 4);
 
         if (ustepNode == null) {
-            throw new NotFoundException("Nie znaleziono takiego ustepu!");
+            throw new NotFoundException("Nie znaleziono takiego ustępu!");
         }
 
         Node punktNode = findNodeAtDepth(ustepNode, punkt, 5);
@@ -259,7 +259,7 @@ abstract public class AbstractPrinter {
         }
 
         if (node.getDepth() == 4) {
-            System.out.println("Ustep " + (index + 1) + ".");
+            System.out.println("Ustęp " + (index + 1) + ".");
         } else if (node.getDepth() == 5) {
             System.out.println("Punkt " + (index + 1) + ")");
         } else if (node.getDepth() == 6) {

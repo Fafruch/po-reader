@@ -22,7 +22,7 @@ public class UokikPrinter extends AbstractPrinter {
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
         if (dzialNode == null) {
-            throw new NotFoundException("Nie ma takiego dzialu!");
+            throw new NotFoundException("Nie ma takiego działu!");
         }
 
         printNodeAndItsChildren(dzialNode);
@@ -38,13 +38,13 @@ public class UokikPrinter extends AbstractPrinter {
         Node dzialNode = findNodeAtDepth(root, dzial, 1);
 
         if (dzialNode == null) {
-            throw new NotFoundException("Nie ma takiego dzialu!");
+            throw new NotFoundException("Nie ma takiego działu!");
         }
 
         Node rozdzialNode = findNodeAtDepth(dzialNode, rozdzial, 2);
 
         if (rozdzialNode == null) {
-            throw new NotFoundException("Nie ma takiego rozdzialu!");
+            throw new NotFoundException("Nie ma takiego rozdziału!");
         }
 
         printNodeAndItsChildren(rozdzialNode);
