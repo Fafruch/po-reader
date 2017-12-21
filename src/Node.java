@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-    static private List<Node> artykuly = new ArrayList<>();
+    static private List<Node> articleList = new ArrayList<>();
     private List<Node> children = new ArrayList<>();
     private int depth;
     private String data;
@@ -12,8 +12,8 @@ public class Node {
         this.data = data;
     }
 
-    static public List<Node> getArtykuly() {
-        return artykuly;
+    static public List<Node> getArticleList() {
+        return articleList;
     }
 
     public void addChild(Node child) {

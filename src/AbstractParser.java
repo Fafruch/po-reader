@@ -49,7 +49,7 @@ abstract public class AbstractParser {
         parentNode.addChild(childNode);
 
         if (childNode.getDepth() == 3) {
-            Node.getArtykuly().add(childNode);
+            Node.getArticleList().add(childNode);
         }
     }
 }
