@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class UokikNormalizer extends Normalizer {
+public class UokikNormalizer {
     public List<String> normalize(List<String> file) {
         List<String> cleanedFile = cleanFile(file);
         List<String> fileWithMovedUsteps = moveUstepsToNewLine(cleanedFile);

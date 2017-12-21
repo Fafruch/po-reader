@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class KonstNormalizer extends Normalizer {
+public class KonstNormalizer {
     public List<String> normalize(List<String> file) {
         List<String> cleanedFile = cleanFile(file);
         List<String> fileWithConnectedLines = connectLines(cleanedFile);
