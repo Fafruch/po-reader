@@ -17,7 +17,7 @@ public class KonstParser extends AbstractParser {
                 depth = 2;
             } else if (line.matches(KonstPattern.ARTYKUL)) {
                 depth = 3;
-            } else if (line.matches(KonstPattern.USTEP) || line.matches(KonstPattern.NIC_OPROCZ_USTEPU)) {
+            } else if (line.matches(KonstPattern.USTEP) || line.matches(KonstPattern.NOTHING_EXCEPT_USTEP)) {
                 depth = 4;
             } else if (line.matches(KonstPattern.PUNKT)) {
                 depth = 5;

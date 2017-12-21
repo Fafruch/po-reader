@@ -46,7 +46,7 @@ public class UokikNormalizer {
                     && nextLine.matches(UokikPattern.TYTUL_DZIALU)) {
                 currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
-            } else while (currentLine.matches(UokikPattern.USTEP_PUNKT_LITERA_LUB_ZWYKLA_LINIA) && nextLine.matches(UokikPattern.ZWYKLA_LINIA)) {
+            } else while (currentLine.matches(UokikPattern.USTEP_PUNKT_LITERA_OR_ZWYKLA_LINIA) && nextLine.matches(UokikPattern.ZWYKLA_LINIA)) {
 
                 if (currentLine.matches(UokikPattern.KONIEC_MYSLNIKIEM)) {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);

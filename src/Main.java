@@ -16,21 +16,18 @@ public class Main {
             runAppWith(args, file);
 
         } catch (FileNotFoundException e) {
-            System.out.println("Wrong path: " + args[0] + ". Could not find file.");
-        } catch (NotFoundException | IllegalArgumentException ex) {
+            System.out.println("Podano złą ścieżkę '" + args[0] + "'. Plik nie został odnaleziony.");
+        } catch (NotFoundException | IllegalArgumentException | NotSupportedFileException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     static private void checkArgs(String args[]) {
         if (args.length < 2) {
-            throw new IllegalArgumentException("You passed too few arguments! After file path provide '-t' for table of contents, '-a' for printing whole file or '-e' for particular element. ");
-
-        } else if (!args[0].equals("konstytucja.txt") && !args[0].equals("uokik.txt")) {
-            throw new IllegalArgumentException("I'm not build for this file. Sorry. : (");
+            throw new IllegalArgumentException("Podano za mało argumentów. Jako drugi argument podaj: \n - '-t' dla spisu streści, \n - '-a' dla wypisania całego sformatowanego pliku lub \n - '-e' dla wybrania konkretnego elementu.");
 
         } else if (!args[1].equals("-t") && !args[1].equals("-a") && !args[1].equals("-e")) {
-            throw new IllegalArgumentException("You've provided not a valid mode. Use '-t' for table of contents, '-a' for printing whole file or '-e' for particular element.");
+            throw new IllegalArgumentException("Podano zły tryb. Jako drugi argument podaj: \n - '-t' dla spisu streści, \n - '-a' dla wypisania całego sformatowanego pliku lub \n - '-e' dla wybrania konkretnego elementu.");
         }
     }
 
@@ -45,14 +42,16 @@ public class Main {
         return storedFile;
     }
 
-    static private void runAppWith(String args[], List<String> storedFile) throws NotFoundException, IllegalArgumentException {
+    static private void runAppWith(String args[], List<String> file)
+            throws NotFoundException, IllegalArgumentException, NotSupportedFileException {
         Node emptyDataTree = new Node(0, "");
-        String filename = args[0];
+        String controlLine = file.get(0);
 
-        if (filename.equals("konstytucja.txt")) {
+        // konstytucja.txt
+        if (controlLine.matches(KonstPattern.IS_KONSTYTUCJA)) {
             // normalize file for easier tree build
             KonstNormalizer konstNormalizer = new KonstNormalizer();
-            List<String> normalizedFile = konstNormalizer.normalize(storedFile);
+            List<String> normalizedFile = konstNormalizer.normalize(file);
 
             // convert list of lines to tree of lines
             KonstParser konstParser = new KonstParser(normalizedFile);
@@ -62,10 +61,11 @@ public class Main {
             KonstPrinter konstPrinter = new KonstPrinter(args);
             konstPrinter.print(dataTree);
 
-        } else if (filename.equals("uokik.txt")) {
+        // uokik.txt
+        } else if (controlLine.matches(UokikPattern.IS_UOKIK)) {
             // normalize file for easier tree build
             UokikNormalizer uokikNormalizer = new UokikNormalizer();
-            List<String> normalizedFile = uokikNormalizer.normalize(storedFile);
+            List<String> normalizedFile = uokikNormalizer.normalize(file);
 
             // convert list of lines to tree of lines
             UokikParser uokikParser = new UokikParser(normalizedFile);
@@ -74,6 +74,8 @@ public class Main {
             // print lines based on user's input
             UokikPrinter uokikPrinter = new UokikPrinter(args);
             uokikPrinter.print(dataTree);
+        } else {
+            throw new NotSupportedFileException("Nie jestem stworzony dla tego pliku. : (");
         }
     }
 }

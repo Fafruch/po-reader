@@ -48,7 +48,7 @@ public class KonstNormalizer {
             if (currentLine.matches(KonstPattern.ROZDZIAL) && nextLine.matches(KonstPattern.DZIAL)) {
                 currentLine = currentLine + " - \"" + nextLine + "\"";
                 i++;
-            } else while (currentLine.matches(KonstPattern.USTEP_PUNKT_LUB_ZWYKLA_LINIA) && nextLine.matches(KonstPattern.ZWYKLA_LINIA)) {
+            } else while (currentLine.matches(KonstPattern.USTEP_PUNKT_OR_ZWYKLA_LINIA) && nextLine.matches(KonstPattern.ZWYKLA_LINIA)) {
 
                 if (currentLine.matches(KonstPattern.KONIEC_MYSLNIKIEM)) {
                     String currentLineWithoutDash = currentLine.substring(0, currentLine.length() - 1);

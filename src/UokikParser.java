@@ -17,7 +17,7 @@ public class UokikParser extends AbstractParser {
                 depth = 2;
             } else if (line.matches(UokikPattern.ARTYKUL)) {
                 depth = 3;
-            } else if (line.matches(UokikPattern.USTEP) || line.matches(UokikPattern.NIC_OPROCZ_USTEPU)) {
+            } else if (line.matches(UokikPattern.USTEP) || line.matches(UokikPattern.NOTHING_EXCEPT_USTEP)) {
                 depth = 4;
             } else if (line.matches(UokikPattern.PUNKT)) {
                 depth = 5;
