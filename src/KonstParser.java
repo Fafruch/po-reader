@@ -24,7 +24,7 @@ public class KonstParser extends AbstractParser {
             }
 
             Node newNode = new Node(depth, line);
-            addNodeToTreeOrStack(newNode);
+            addNodeToTreeOrStack(newNode, root);
         }
 
         return root;

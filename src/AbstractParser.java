@@ -11,11 +11,11 @@ abstract public class AbstractParser {
 
     public abstract Node parseToTree(Node root);
 
-    protected void addNodeToTreeOrStack(Node newNode) {
+    protected void addNodeToTreeOrStack(Node newNode, Node root) {
         Node lastNodeOnStack = stack.get(stack.size() - 1);
 
         if (lastNodeOnStack.getDepth() < newNode.getDepth()) {
-            addNodeToTree(lastNodeOnStack, newNode);
+            addNodeToTree(lastNodeOnStack, newNode, root);
 
             stack.add(newNode);
         } else if (lastNodeOnStack.getDepth() == newNode.getDepth()) {
@@ -23,7 +23,7 @@ abstract public class AbstractParser {
                 Node currentNode = stack.get(i);
 
                 if (currentNode.getDepth() < newNode.getDepth()) {
-                    addNodeToTree(currentNode, newNode);
+                    addNodeToTree(currentNode, newNode, root);
                     break;
                 }
             }
@@ -34,7 +34,7 @@ abstract public class AbstractParser {
                 Node currentNode = stack.get(i);
 
                 if (currentNode.getDepth() < newNode.getDepth()) {
-                    addNodeToTree(currentNode, newNode);
+                    addNodeToTree(currentNode, newNode, root);
                     break;
                 } else {
                     stack.remove(i);
@@ -45,11 +45,11 @@ abstract public class AbstractParser {
         }
     }
 
-    private void addNodeToTree(Node parentNode, Node childNode) {
+    private void addNodeToTree(Node parentNode, Node childNode, Node root) {
         parentNode.addChild(childNode);
 
         if (childNode.getDepth() == 3) {
-            Node.getArticleList().add(childNode);
+            root.getArticleList().add(childNode);
         }
     }
 }
