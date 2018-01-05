@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class Main {
 
     private static void runAppWith(String args[], List<String> file)
             throws NotFoundException, IllegalArgumentException, NotSupportedFileException {
-        Node emptyDataTree = new Node(0, "");
+        Node emptyDataTree = new Node(0, "", new ArrayList<>());
         String controlLine = file.get(0);
 
         // konstytucja.txt
