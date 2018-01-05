@@ -5,11 +5,18 @@ public class Node {
     private List<Node> children = new ArrayList<>();
     private int depth;
     private String data;
-    private List<Node> articleList = new ArrayList<>();
+    private List<Node> articleList;
 
     public Node(int depth, String data) {
         this.depth = depth;
         this.data = data;
+    }
+
+    // constructor only for tree root
+    public Node(int depth, String data, List<Node> articleList) {
+        this.depth = depth;
+        this.data = data;
+        this.articleList = articleList;
     }
 
     public void addChild(Node child) {
