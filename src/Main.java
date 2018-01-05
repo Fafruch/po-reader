@@ -7,23 +7,29 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
-
+        try {
             checkArgs(args);
 
-            List<String> file = convertFileToList(br);
+            try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
 
-            runAppWith(args, file);
+                List<String> file = convertFileToList(br);
 
-        } catch (FileNotFoundException e) {
-            System.out.println("Podano złą ścieżkę '" + args[0] + "'. Plik nie został odnaleziony.");
-        } catch (NotFoundException | IllegalArgumentException | NotSupportedFileException ex) {
+                runAppWith(args, file);
+
+            } catch (FileNotFoundException e) {
+                System.out.println("Podano złą ścieżkę '" + args[0] + "'. Plik nie został odnaleziony.");
+            } catch (NotFoundException | NotSupportedFileException ex) {
+                System.out.println(ex.getMessage());
+            }
+        } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     private static void checkArgs(String args[]) {
-        if (args.length < 2) {
+        if (args.length < 1){
+            throw new IllegalArgumentException("Podano za mało argumentów. \nJako pierwszy podaj nazwę pliku, z którego mam czytać. \nJako drugi argument podaj: \n- '-t' dla spisu treści, \n- '-a' dla wypisania całego sformatowanego pliku \n- '-e' dla wybrania konkretnego elementu.");
+        } else if (args.length < 2) {
             throw new IllegalArgumentException("Podano za mało argumentów. Jako drugi argument podaj: \n- '-t' dla spisu treści, \n- '-a' dla wypisania całego sformatowanego pliku \n- '-e' dla wybrania konkretnego elementu.");
 
         } else if (!args[1].equals("-t") && !args[1].equals("-a") && !args[1].equals("-e")) {
