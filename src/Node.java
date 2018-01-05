@@ -5,7 +5,7 @@ public class Node {
     private List<Node> children = new ArrayList<>();
     private int depth;
     private String data;
-    private static List<Node> articleList = new ArrayList<>();
+    private List<Node> articleList = new ArrayList<>();
 
     public Node(int depth, String data) {
         this.depth = depth;
@@ -28,7 +28,7 @@ public class Node {
         return this.data;
     }
 
-    public static List<Node> getArticleList() {
+    public List<Node> getArticleList() {
         return articleList;
     }
 }

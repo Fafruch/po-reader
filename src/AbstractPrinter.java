@@ -136,8 +136,8 @@ abstract public class AbstractPrinter {
         String normalizedData;
         boolean foundArticles = false;
 
-        for (int i = 0; i < Node.getArticleList().size(); i++) {
-            Node currentNode = Node.getArticleList().get(i);
+        for (int i = 0; i < root.getArticleList().size(); i++) {
+            Node currentNode = root.getArticleList().get(i);
             String data = currentNode.getData();
             normalizedData = normalizer.normalizeString(data);
 
